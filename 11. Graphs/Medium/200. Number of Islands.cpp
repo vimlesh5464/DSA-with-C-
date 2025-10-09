@@ -6,45 +6,47 @@ using namespace std;
 
 
 class Solution {
-public:
-    int numIslands(vector<vector<char>>& grid) {
-        if (grid.empty()) return 0;
-
-        int m = grid.size();
-        int n = grid[0].size();
-        int count = 0;
-
-        vector<vector<int>> directions = {{1,0}, {-1,0}, {0,1}, {0,-1}}; // 4 directions
-
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == '1') {
-                    count++;
-                    grid[i][j] = '0'; // mark as visited
-                    queue<pair<int,int>> q;
-                    q.push({i,j});
-
-                    while(!q.empty()) {
-                        auto [x,y] = q.front();
-                        q.pop();
-
-                        for(auto &dir : directions) {
-                            int nx = x + dir[0];
-                            int ny = y + dir[1];
-
-                            if(nx >=0 && ny >=0 && nx < m && ny < n && grid[nx][ny]=='1') {
-                                grid[nx][ny] = '0'; // mark visited
-                                q.push({nx, ny});
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return count;
-    }
-};
-
+  public:
+      void dfs(vector<vector<char>>& grid, int i, int j) {
+          int m = grid.size();
+          int n = grid[0].size();
+  
+          // Base case: Out of bounds or water cell
+          if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] == '0') {
+              return;
+          }
+  
+          // Mark the cell as visited by changing it to '0'
+          grid[i][j] = '0';
+  
+          // Explore all 4 adjacent directions
+          dfs(grid, i + 1, j); // Down
+          dfs(grid, i - 1, j); // Up
+          dfs(grid, i, j + 1); // Right
+          dfs(grid, i, j - 1); // Left
+      }
+  
+      int numIslands(vector<vector<char>>& grid) {
+          if (grid.empty()) return 0;
+  
+          int count = 0;
+          int m = grid.size();
+          int n = grid[0].size();
+  
+          // Traverse every cell in the grid
+          for (int i = 0; i < m; ++i) {
+              for (int j = 0; j < n; ++j) {
+                  // If it's land, start a DFS and increase island count
+                  if (grid[i][j] == '1') {
+                      dfs(grid, i, j);
+                      count++;
+                  }
+              }
+          }
+          return count;
+      }
+  };
+  
 int main() {
     Solution sol;
 
