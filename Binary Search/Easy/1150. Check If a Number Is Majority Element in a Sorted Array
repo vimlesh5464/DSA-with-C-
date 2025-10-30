@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isMajorityElement(vector<int>& nums, int target) {
+    int n = nums.size();
+    int low = 0, high = n - 1;
+
+    // Binary search to find the first occurrence of target
+    while (low < high) {
+        int mid = (low + high) / 2;
+        if (nums[mid] < target)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+
+    // Check if target appears more than n/2 times
+    if (low < n && nums[low] == target && (low + n / 2 < n) && nums[low + n / 2] == target)
+        return true;
+
+    return false;
+}
+
+int main() {
+    int n, target;
+    cout << "Enter size of array: ";
+    cin >> n;
+
+    vector<int> nums(n);
+    cout << "Enter sorted array elements: ";
+    for (int i = 0; i < n; i++)
+        cin >> nums[i];
+
+    cout << "Enter target element: ";
+    cin >> target;
+
+    if (isMajorityElement(nums, target))
+        cout << target << " is a majority element." << endl;
+    else
+        cout << target << " is not a majority element." << endl;
+
+    return 0;
+}

@@ -43,30 +43,30 @@ int main() {
 #include <iostream>
 #include <vector>
 using namespace std;
-
-vector<int> findUnion(vector<int> &a, vector<int> &b) {
-    vector<int> res = a;
-
-    // Traverse through b[] and search every element
-    // b[i] in a[]
-    for (int i = 0; i < b.size(); i++) {
-
-        // check if the element was present in a[]
-        // to avoid duplicates
-        int j;
-        for (j = 0; j < a.size(); j++) {
-            if (a[j] == b[i])
-                break;
-        }
-
-        // if not already present then
-        // add it to result
-        if (j == a.size()) {
-            res.push_back(b[i]);
-        }
-    }
-    return res;
-}
+class Solution {
+  public:
+      vector<int> intersect(const vector<int> &A, const vector<int> &B) {
+          int n = A.size();
+          int m = B.size();
+          
+          vector<int> ans;
+          if (A.empty() || B.empty()) return ans;
+          
+          vector<int> temp = B;
+  
+          for (int i = 0; i < n; i++) {
+              for (int j = 0; j < m; j++) {
+                  if (A[i] == temp[j]) {
+                      ans.push_back(A[i]);
+                      temp[j] = INT_MIN;
+                      break;
+                  }
+              }
+          }
+          
+          return ans;
+      }
+  };
 
 int main() {
 
@@ -88,30 +88,29 @@ int main() {
 #include<unordered_map>
 using namespace std;
 
-//[Naive Approach] Using Triple Nested Loops - O(n × n × m) Time and O(1) Space
-vector<int> intersect(vector<int>& a, vector<int>& b) {
-    vector<int> res;
-
-    // Traverse through a[] and search every element
-    // a[i] in b[]
-    for (int i = 0; i < a.size(); i++) {    
-        for (int j = 0; j < b.size(); j++) {
-          
-            // If found, check if the element is already 
-            // in the result to avoid duplicates
-            if (a[i] == b[j]) { 
-                int k;
-                for (k = 0; k < res.size(); k++) 
-                    if (res[k] == a[i]) 
-                        break;
-                if (k == res.size()) {
-                    res.push_back(a[i]);
-                }
-            }
-        }
-    }
-
-    return res;
+//[Naive Approach] Time Complexity = O(n + m) and Space Complexity = O(min(n, m))
+//(excluding the output vector ans, auxiliary space = O(1))
+vector<int> intersect(vector<int>& A, vector<int>& B) {
+  int n = A.size();
+  int m = B.size();
+  vector<int> ans;
+  if(A.empty() || B.empty()){
+      return ans;
+  }
+  int i = 0;
+  int j = 0;
+  while(i < n && j < m){
+      if(A[i]==B[j]){
+          ans.push_back(A[i]);
+          i++;
+          j++;
+      }else if(A[i]<B[j]){
+          i++;
+      }else{
+          j++;
+      }
+  }
+  return ans;
 }
 
 
