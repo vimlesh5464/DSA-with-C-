@@ -8,7 +8,7 @@ int binary(vector<int> & arr, int target){
   while(i<=j){
     int mid = (i+j)/2;
     if(arr[mid]==target){
-      return i;
+      return mid;
     }
     else if(arr[mid]<target){
       i = mid +1;
@@ -19,7 +19,16 @@ int binary(vector<int> & arr, int target){
   return -1;
 }
 int main(){
-  vector<int> arr = {1,2,3,4,5};
-  cout<< binary(arr,5);
+  int n;
+  cin>>n;
+  int target;
+  cin>> target;
+  vector<int> arr(n);
+for(int i = 0; i < n; i++){
+    cin >> arr[i];
+}
+
+
+  cout<< binary(arr,target);
   return 0;
 }
