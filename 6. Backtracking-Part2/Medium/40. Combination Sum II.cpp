@@ -63,3 +63,30 @@ class Solution {
         }
     };
     
+    int main() {
+      Solution obj;
+      int n, target;
+  
+      cout << "Enter number of elements: ";
+      cin >> n;
+  
+      vector<int> candidates(n);
+      cout << "Enter elements: ";
+      for (int i = 0; i < n; i++)
+          cin >> candidates[i];
+  
+      cout << "Enter target sum: ";
+      cin >> target;
+  
+      vector<vector<int>> result = obj.combinationSum2(candidates, target);
+  
+      cout << "\nUnique Combinations that sum to " << target << ":\n";
+      for (auto& comb : result) {
+          cout << "[ ";
+          for (auto& num : comb)
+              cout << num << " ";
+          cout << "]\n";
+      }
+  
+      return 0;
+  }

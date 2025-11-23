@@ -1,75 +1,88 @@
-#include <iostream>
-#include <vector>
-#include <list>
-#include <queue>
+#include<iostream>
+#include<list>
+#include<queue>
+#include<vector>
 using namespace std;
 
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        if (grid.empty()) return 0;
 
         int m = grid.size(), n = grid[0].size();
-        int days = 0, total = 0, count = 0;
 
-        queue<pair<int, int>> rotten;
+        int total = 0;          // total number of oranges (fresh + rotten)
+        int rottenCount = 0;    // number of oranges processed during BFS
+        int days = 0;           // result: minimum time to rot all oranges
 
-        // Step 1: Count total oranges and enqueue all initially rotten ones
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] != 0) total++;
-                if (grid[i][j] == 2) rotten.push({i, j});
+        queue<pair<int, int>> q; // BFS queue for rotten oranges
+
+        // STEP 1: Count total oranges & push all initially rotten oranges into queue
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(grid[i][j] != 0) total++;   // count both fresh(1) + rotten(2)
+
+                if(grid[i][j] == 2) {          // push rotten oranges
+                    q.push({i, j});
+                }
             }
         }
 
-        // Directions: up, down, left, right
+        // Directions (right, left, down, up)
         int dx[4] = {0, 0, 1, -1};
         int dy[4] = {1, -1, 0, 0};
 
-        // Step 2: BFS to rot adjacent fresh oranges
-        while (!rotten.empty()) {
-            int k = rotten.size();
-            count += k;
-            while (k--) {
-                int x = rotten.front().first, y = rotten.front().second;
-                rotten.pop();
-                for (int i = 0; i < 4; i++) {
-                    int nx = x + dx[i], ny = y + dy[i];
-                    if (nx < 0 || ny < 0 || nx >= m || ny >= n || grid[nx][ny] != 1)
-                        continue;
-                    grid[nx][ny] = 2; // rot it
-                    rotten.push({nx, ny});
+        // STEP 2: Multi-source BFS from initially rotten oranges
+        while(!q.empty()) {
+
+            int k = q.size();       // number of rotten oranges at current minute
+            rottenCount += k;       // update oranges processed
+
+            while(k--) {
+                auto [x, y] = q.front();
+                q.pop();
+
+                // check 4-directionally adjacent cells
+                for(int i = 0; i < 4; i++){
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
+
+                    // skip invalid or non-fresh cells
+                    if(nx < 0 || ny < 0 || nx >= m || ny >= n) continue;
+                    if(grid[nx][ny] != 1) continue;
+
+                    // rot fresh orange → mark rotten
+                    grid[nx][ny] = 2;
+
+                    // push new rotten orange into queue
+                    q.push({nx, ny});
                 }
             }
-            if (!rotten.empty()) days++;
+
+            // If queue is not empty, it means new oranges got rotten,
+            // so 1 minute has passed
+            if(!q.empty()) days++;
         }
 
-        return (total == count) ? days : -1;
+        // STEP 3: If processed oranges != total → some fresh remained → impossible
+        return (total == rottenCount) ? days : -1;
     }
 };
 
 int main() {
-    Solution sol;
+    int m, n;
+    cin >> m >> n;
 
-    vector<vector<int>> grid1 = {
-        {2,1,1},
-        {1,1,0},
-        {0,1,1}
-    };
+    vector<vector<int>> grid(m, vector<int>(n));
 
-    vector<vector<int>> grid2 = {
-        {2,1,1},
-        {0,1,1},
-        {1,0,1}
-    };
+    // Input grid
+    for(int i = 0; i < m; i++){
+        for(int j = 0; j < n; j++){
+            cin >> grid[i][j];
+        }
+    }
 
-    vector<vector<int>> grid3 = {
-        {0,2}
-    };
-
-    cout << "Example 1 Output: " << sol.orangesRotting(grid1) << endl; // Expected: 4
-    cout << "Example 2 Output: " << sol.orangesRotting(grid2) << endl; // Expected: -1
-    cout << "Example 3 Output: " << sol.orangesRotting(grid3) << endl; // Expected: 0
+    Solution obj;
+    cout << obj.orangesRotting(grid); // print output
 
     return 0;
 }
