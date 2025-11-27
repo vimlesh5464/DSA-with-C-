@@ -1,23 +1,48 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
-
 class Solution {
   public:
-  
       int minCostClimbingStairs(vector<int>& cost) {
           int n = cost.size();
-          if(n == 0) return 0;
-          if(n == 1) return cost[0];
-          
-          vector<int> dp(n);
-          dp[0] = cost[0];
-          dp[1] = cost[1];
-          
-          for(int i = 2; i < n; i++){
-              dp[i] = cost[i] + min(dp[i-1], dp[i-2]);
+          if (n == 0) return 0;
+          if (n == 1) return cost[0];
+  
+          int prev2 = cost[0]; // dp[i-2]
+          int prev1 = cost[1]; // dp[i-1]
+  
+          for (int i = 2; i < n; i++) {
+              int curr = cost[i] + min(prev1, prev2);
+              prev2 = prev1;
+              prev1 = curr;
           }
-          
-          return min(dp[n-1], dp[n-2]);
+  
+          return min(prev1, prev2);
       }
   };
+  
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int n = cost.size();
+        if (n == 0) return 0;
+        if (n == 1) return cost[0];
+        
+        vector<int> dp(n);
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+        
+        for (int i = 2; i < n; i++) {
+            dp[i] = cost[i] + min(dp[i - 1], dp[i - 2]);
+        }
+        
+        return min(dp[n - 1], dp[n - 2]);
+    }
+};
+
+int main() {
+    vector<int> cost = {10, 15, 20};
+    Solution s;
+    cout << s.minCostClimbingStairs(cost);
+    return 0;
+}
