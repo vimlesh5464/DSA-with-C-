@@ -63,7 +63,10 @@ bool isBalanced(string& s) {
 }
 
 int main() {
-    string s="[()()]{}";
-    cout<<(isBalanced(s)?"true":"false");
-    return 0;
+  string s;
+  cin >> s;  // take input from user
+
+  cout << (isBalanced(s) ? "true" : "false") << endl;
+
+  return 0;
 }

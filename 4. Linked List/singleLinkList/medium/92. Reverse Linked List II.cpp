@@ -1,4 +1,5 @@
 #include <iostream>
+#include<vector>
 using namespace std;
 
 // Definition for singly-linked list
@@ -8,6 +9,34 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
 };
+class Solution {
+  public:
+      ListNode* reverseBetween(ListNode* head, int left, int right) {
+          if (!head || left == right) return head;
+  
+          vector<int> arr;
+          ListNode* temp = head;
+  
+          // Step 1: Copy values to vector
+          while (temp) {
+              arr.push_back(temp->val);
+              temp = temp->next;
+          }
+  
+          // Step 2: Reverse only the subarray (left-1 to right-1)
+          reverse(arr.begin() + (left - 1), arr.begin() + right);
+  
+          // Step 3: Copy back to linked list
+          ListNode* temp1 = new ListNode(arr[0]);
+          ListNode* curr = temp1;
+          for(int i = 1; i < arr.size(); i++){
+              curr->next = new ListNode(arr[i]);
+              curr = curr->next;
+          }
+          return temp1;
+      }
+  };
+  
 
 // Solution class
 class Solution {
@@ -39,7 +68,7 @@ public:
 };
 
 // Helper function to create linked list from array
-ListNode* createList(int arr[], int n) {
+ListNode* createList(vector<int>&arr, int n) {
     if (n == 0) return nullptr;
     ListNode* head = new ListNode(arr[0]);
     ListNode* curr = head;
@@ -60,17 +89,22 @@ void printList(ListNode* head) {
 }
 
 int main() {
-    int arr[] = {1, 2, 3, 4, 5};
-    ListNode* head = createList(arr, 5);
+  int n;
+  cin >> n;
 
-    cout << "Original List: ";
-    printList(head);
+  vector<int> arr(n);
+  for (int i = 0; i < n; i++)
+      cin >> arr[i];
 
-    Solution sol;
-    head = sol.reverseBetween(head, 2, 4);
+  int left, right;
+  cin >> left >> right;
 
-    cout << "Reversed List (2-4): ";
-    printList(head);
+  ListNode* head = createList(arr,arr.size());
 
-    return 0;
+  Solution s;
+  head = s.reverseBetween(head, left, right);
+
+  printList(head);
+
+  return 0;
 }

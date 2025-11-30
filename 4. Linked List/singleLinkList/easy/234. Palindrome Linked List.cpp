@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include<vector>
 using namespace std;
 
 // Definition for singly-linked list
@@ -36,7 +37,7 @@ public:
 };
 
 // Helper function to create linked list from array
-ListNode* createList(int arr[], int n) {
+ListNode* createList(vector<int> &arr, int n) {
     if (n == 0) return NULL;
     ListNode* head = new ListNode(arr[0]);
     ListNode* curr = head;
@@ -57,18 +58,25 @@ void printList(ListNode* head) {
 }
 
 int main() {
-    int arr[] = {1, 2, 3, 2, 1};
-    ListNode* head = createList(arr, 5);
+  int n;
+  cin >> n;
 
-    cout << "Linked List: ";
-    printList(head);
+  vector<int> arr(n);
+  for (int i = 0; i < n; i++) {
+      cin >> arr[i];
+  }
 
-    Solution sol;
-    if (sol.isPalindrome(head)) {
-        cout << "The list is a palindrome." << endl;
-    } else {
-        cout << "The list is not a palindrome." << endl;
-    }
+  ListNode* head = createList(arr,arr.size());
 
-    return 0;
+  // Print the list
+  printList(head);
+
+  Solution sol;
+  if (sol.isPalindrome(head)) {
+      cout << "The list is a palindrome." << endl;
+  } else {
+      cout << "The list is not a palindrome." << endl;
+  }
+
+  return 0;
 }

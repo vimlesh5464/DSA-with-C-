@@ -37,3 +37,45 @@ public:
         return dummy->next;
     }
 };
+// ----------------- LINKED LIST HELPERS -----------------
+ListNode* createList(const vector<int>& nums) {
+  if (nums.empty()) return NULL;
+  ListNode* head = new ListNode(nums[0]);
+  ListNode* curr = head;
+  for (int i = 1; i < nums.size(); i++) {
+      curr->next = new ListNode(nums[i]);
+      curr = curr->next;
+  }
+  return head;
+}
+
+void printList(ListNode* head) {
+  while (head) {
+      cout << head->val;
+      if (head->next) cout << " ";
+      head = head->next;
+  }
+  cout << "\n";
+}
+
+// ------------------------- MAIN -------------------------
+int main() {
+  int k;
+  cin >> k;
+  vector<ListNode*> lists(k);
+
+  for (int i = 0; i < k; i++) {
+      int n;
+      cin >> n;
+      vector<int> arr(n);
+      for (int j = 0; j < n; j++) cin >> arr[j];
+      lists[i] = createList(arr);
+  }
+
+  Solution sol;
+  ListNode* merged = sol.mergeKLists(lists);
+
+  printList(merged);
+
+  return 0;
+}

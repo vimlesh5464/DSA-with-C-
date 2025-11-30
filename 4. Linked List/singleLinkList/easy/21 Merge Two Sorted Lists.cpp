@@ -1,122 +1,113 @@
 #include <iostream>
-#include <vector>
+#include<vector>
 using namespace std;
 
-// Linked list node
-struct Node {
-    int data;
-    Node* next;
-    Node(int val) {
-        data = val;
-        next = NULL;
+
+class ListNode {
+public:
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+  public:
+      ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+           vector<int> ans;
+           ListNode* i = list1;
+           ListNode* j = list2;
+           while(i!=NULL && j!=NULL){
+              if(i->val<=j->val){
+                  ans.push_back(i->val);
+                  i=i->next;
+              }else{
+                  ans.push_back(j->val);
+                  j=j->next;
+              }
+           }
+           while(i!=NULL){
+              ans.push_back(i->val);
+              i=i->next;
+           }
+           while(j!=NULL){
+              ans.push_back(j->val);
+              j=j->next;
+           }
+            // 🩵 FIX: handle empty vector
+          if (ans.empty()) return NULL;
+           ListNode* head = new ListNode(ans[0]);
+           ListNode* temp = head;
+           for(int i = 1; i < ans.size(); i++){
+              temp->next=new ListNode(ans[i]);
+              temp = temp->next;
+           }
+           return head;
+      }
+  };
+// --------------------- SOLUTION ---------------------
+class Solution {
+public:
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode dummy(0);
+        ListNode* tail = &dummy;
+
+        while (l1 && l2) {
+            if (l1->val < l2->val) {
+                tail->next = l1;
+                l1 = l1->next;
+            } else {
+                tail->next = l2;
+                l2 = l2->next;
+            }
+            tail = tail->next;
+        }
+
+        // Attach remaining nodes
+        if (l1) tail->next = l1;
+        if (l2) tail->next = l2;
+
+        return dummy.next;
     }
 };
 
-// Insert node at end
-void insert(Node*& head, int val) {
-    Node* newNode = new Node(val);
-    if (head == NULL) {
-        head = newNode;
-        return;
-    }
-    Node* temp = head;
-    while (temp->next != NULL) {
-        temp = temp->next;
-    }
-    temp->next = newNode;
-}
-
-// Print linked list
-void printList(Node* head) {
-    Node* temp = head;
-    while (temp != NULL) {
-        cout << temp->data << " -> ";
-        temp = temp->next;
-    }
-    cout << "NULL" << endl;
-}
-
-// 1. Vector-Based Approach
-// Merge using vector
-Node* mergeTwoLinklistVector(Node* list1, Node* list2) {
-    vector<int> ans;
-    Node* i = list1;
-    Node* j = list2;
-
-    while (i != nullptr && j != nullptr) {
-        if (i->data <= j->data) {
-            ans.push_back(i->data);
-            i = i->next;
-        } else {
-            ans.push_back(j->data);
-            j = j->next;
-        }
-    }
-
-    while (i != nullptr) {
-        ans.push_back(i->data);
-        i = i->next;
-    }
-
-    while (j != nullptr) {
-        ans.push_back(j->data);
-        j = j->next;
-    }
-
-    // Build new linked list
-    Node* head = new Node(ans[0]);
-    Node* curr = head;
-    for (int k = 1; k < ans.size(); k++) {
-        curr->next = new Node(ans[k]);
+// ----------------- LINKED LIST HELPERS -----------------
+ListNode* createList(const vector<int>& nums) {
+    if (nums.empty()) return NULL;
+    ListNode* head = new ListNode(nums[0]);
+    ListNode* curr = head;
+    for (int i = 1; i < nums.size(); i++) {
+        curr->next = new ListNode(nums[i]);
         curr = curr->next;
     }
     return head;
 }
-//2. Pointer-Based Approach (Efficient)
-// Merge using pointers
-Node* mergeTwoLinklist(Node* list1, Node* list2) {
-  Node dummy(-1);  // dummy node
-  Node* tail = &dummy;
 
-  while (list1 != NULL && list2 != NULL) {
-      if (list1->data <= list2->data) {
-          tail->next = list1;
-          list1 = list1->next;
-      } else {
-          tail->next = list2;
-          list2 = list2->next;
-      }
-      tail = tail->next;
-  }
-
-  if (list1 != NULL) tail->next = list1;
-  if (list2 != NULL) tail->next = list2;
-
-  return dummy.next;
+void printList(ListNode* head) {
+    while (head) {
+        cout << head->val;
+        if (head->next) cout << " ";
+        head = head->next;
+    }
+    cout << "\n";
 }
 
-// Driver code
+// ------------------------- MAIN -------------------------
 int main() {
-    Node* list1 = NULL;
-    Node* list2 = NULL;
+    int n1, n2;
+    cin >> n1;
+    vector<int> arr1(n1);
+    for (int i = 0; i < n1; i++) cin >> arr1[i];
 
-    insert(list1, 1);
-    insert(list1, 3);
-    insert(list1, 5);
+    cin >> n2;
+    vector<int> arr2(n2);
+    for (int i = 0; i < n2; i++) cin >> arr2[i];
 
-    insert(list2, 2);
-    insert(list2, 4);
-    insert(list2, 6);
+    ListNode* l1 = createList(arr1);
+    ListNode* l2 = createList(arr2);
 
-    cout << "List 1: ";
-    printList(list1);
+    Solution sol;
+    ListNode* merged = sol.mergeTwoLists(l1, l2);
 
-    cout << "List 2: ";
-    printList(list2);
-
-    Node* merged = mergeTwoLinklistVector(list1, list2);
-
-    cout << "Merged List (Vector): ";
     printList(merged);
 
     return 0;

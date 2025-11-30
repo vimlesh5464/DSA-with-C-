@@ -52,4 +52,36 @@ class Solution {
           return newHead;
       }
   };
-  
+  class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head) {
+            if (!head) return NULL;
+    
+            ListNode* dummy = new ListNode(0);
+            dummy->next = head;
+    
+            ListNode* prev = dummy;  
+            ListNode* curr = head;
+    
+            while (curr) {
+                // Check if this value occurs more than once
+                if (curr->next && curr->val == curr->next->val) {
+                    
+                    // Skip all nodes with this value
+                    while (curr->next && curr->val == curr->next->val) {
+                        curr = curr->next;
+                    }
+    
+                    // Skip the last duplicate
+                    prev->next = curr->next;
+                } 
+                else {
+                    prev = prev->next;  // value was unique
+                }
+                curr = curr->next;
+            }
+    
+            return dummy->next;
+        }
+    };
+    

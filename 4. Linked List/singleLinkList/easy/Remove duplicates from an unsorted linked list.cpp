@@ -13,30 +13,6 @@ struct ListNode {
     }
 };
 
-class Solution {
-  public:
-      ListNode* removeDuplicates(ListNode* head) {
-          if (head == NULL) return NULL;
-  
-          unordered_set<int> seen;
-          ListNode* curr = head;
-          ListNode* prev = NULL;
-  
-          while (curr != NULL) {
-              if (seen.find(curr->val) != seen.end()) {
-                  // Duplicate found → remove node
-                  prev->next = curr->next;
-              } else {
-                  seen.insert(curr->val);
-                  prev = curr;
-              }
-              curr = curr->next;
-          }
-  
-          return head;
-      }
-  };
-  
   class Solution {
     public:
         ListNode* removeDuplicates(ListNode* head) {
@@ -67,3 +43,68 @@ class Solution {
             return newHead;
         }
     };
+    // ---------------------------------------------------------
+class Solution {
+  public:
+      ListNode* removeDuplicates(ListNode* head) {
+          if (!head) return head;
+  
+          unordered_set<int> seen;
+          ListNode* curr = head;
+          ListNode* prev = NULL;
+  
+          while (curr) {
+              if (seen.count(curr->val)) {
+                  // Duplicate found → delete current node
+                  prev->next = curr->next;
+              } else {
+                  seen.insert(curr->val);
+                  prev = curr;
+              }
+              curr = curr->next;
+          }
+          return head;
+      }
+  };
+  
+  // ----------------- Linked List Helper Functions -----------------
+  ListNode* createList(vector<int>& arr) {
+      if (arr.empty()) return NULL;
+      ListNode* head = new ListNode(arr[0]);
+      ListNode* temp = head;
+  
+      for (int i = 1; i < arr.size(); i++) {
+          temp->next = new ListNode(arr[i]);
+          temp = temp->next;
+      }
+      return head;
+  }
+  
+  void printList(ListNode* head) {
+      while (head) {
+          cout << head->val;
+          if (head->next) cout << " ";
+          head = head->next;
+      }
+      cout << "\n";
+  }
+  
+  // ------------------------------ MAIN ------------------------------
+  int main() {
+      int n;
+      cin >> n;
+  
+      vector<int> arr(n);
+      for (int i = 0; i < n; i++) cin >> arr[i];
+  
+      ListNode* head = createList(arr);
+  
+      Solution sol;
+      head = sol.removeDuplicates(head);
+  
+      printList(head);
+  
+      return 0;
+  }
+  
+  
