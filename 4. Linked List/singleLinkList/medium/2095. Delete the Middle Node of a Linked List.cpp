@@ -39,4 +39,28 @@ class Solution {
           return newHead; // return new head
       }
   };
+
+  class Solution {
+    public:
+        ListNode* deleteMiddle(ListNode* head) {
+            // Case 1: Only one node
+            if (head == NULL || head->next == NULL)
+                return NULL;
+    
+            ListNode* slow = head;
+            ListNode* fast = head->next->next;
+    
+            // Move fast by 2, slow by 1
+            while (fast != NULL && fast->next != NULL) {
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+    
+            // slow->next is middle node
+            slow->next = slow->next->next;
+    
+            return head;
+        }
+    };
+    
   
