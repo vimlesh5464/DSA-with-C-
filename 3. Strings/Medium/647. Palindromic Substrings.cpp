@@ -4,6 +4,32 @@
 using namespace std;
 
 class Solution {
+  public:
+      int countSubstrings(string s) {
+          int count = 0;
+  
+          for (int i = 0; i < s.length(); i++) {
+              // Count odd length palindromes
+              count += expand(s, i, i);
+  
+              // Count even length palindromes
+              count += expand(s, i, i + 1);
+          }
+          return count;
+      }
+  
+      int expand(string &s, int left, int right) {
+          int cnt = 0;
+          while (left >= 0 && right < s.length() && s[left] == s[right]) {
+              cnt++;
+              left--;
+              right++;
+          }
+          return cnt;
+      }
+  };
+  
+class Solution {
 public:
     int countSubstrings(string s) {
         int n = s.size();
