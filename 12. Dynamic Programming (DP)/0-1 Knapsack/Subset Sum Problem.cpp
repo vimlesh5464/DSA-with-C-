@@ -47,3 +47,13 @@ class Solution {
         }
     };
     
+    int main() {
+      vector<int> arr = {4, 2, 7, 1, 3};
+      int target = 10;
+  
+      Solution sol;
+      cout << (sol.isSubsetSum(arr, target) ? "True" : "False") << endl;
+  
+      return 0;
+  }
+  

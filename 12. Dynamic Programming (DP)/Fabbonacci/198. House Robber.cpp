@@ -1,27 +1,43 @@
 #include <iostream>
 #include<vector>
 using namespace std;
-
 class Solution {
   public:
       int solve(int i, vector<int>& nums) {
-          // Base cases
-          if (i < 0) return 0;            // No houses left
-          if (i == 0) return nums[0];     // Only first house
+          int n = nums.size();
   
-          // Choice: rob this house or skip it
-          int pick = nums[i] + solve(i - 2, nums);  // Rob current, skip previous
-          int notPick = solve(i - 1, nums);         // Skip current
+          // Base case
+          if (i >= n) return 0;
+  
+          int pick = nums[i] + solve(i + 2, nums);
+          int notPick = solve(i + 1, nums);
   
           return max(pick, notPick);
       }
   
       int rob(vector<int>& nums) {
-          int n = nums.size();
-          return solve(n - 1, nums);
+          return solve(0, nums);
       }
   };
-  
+//(Memoization
+  class Solution {
+    public:
+        int solve(int i, vector<int>& nums, vector<int>& dp) {
+            if (i >= nums.size()) return 0;
+            if (dp[i] != -1) return dp[i];
+    
+            int pick = nums[i] + solve(i + 2, nums, dp);
+            int notPick = solve(i + 1, nums, dp);
+    
+            return dp[i] = max(pick, notPick);
+        }
+    
+        int rob(vector<int>& nums) {
+            vector<int> dp(nums.size(), -1);
+            return solve(0, nums, dp);
+        }
+    };
+    
   
 
 class Solution {
