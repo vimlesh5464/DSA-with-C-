@@ -2,6 +2,33 @@
 #include<vector>
 using namespace std;
 
+
+
+// Pure recursive function
+int lcsUtil(string &s1, string &s2, int i, int j) {
+    // Base case
+    if (i < 0 || j < 0)
+        return 0;
+
+    // If characters match
+    if (s1[i] == s2[j])
+        return 1 + lcsUtil(s1, s2, i - 1, j - 1);
+
+    // If characters do not match
+    return max(
+        lcsUtil(s1, s2, i - 1, j),
+        lcsUtil(s1, s2, i, j - 1)
+    );
+}
+
+// Wrapper function
+int lcs(string s1, string s2) {
+    int n = s1.size();
+    int m = s2.size();
+
+    return lcsUtil(s1, s2, n - 1, m - 1);
+}
+
 // Function to find the length of the Longest Common Subsequence (LCS)
 int lcsUtil(string& s1, string& s2, int ind1, int ind2, vector<vector<int>>& dp) {
   // Base case: If either string reaches the end, return 0
