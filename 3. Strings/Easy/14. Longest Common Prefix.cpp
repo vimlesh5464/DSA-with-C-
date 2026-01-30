@@ -6,16 +6,17 @@ using namespace std;
 class Solution {
   public:
       string longestCommonPrefix(vector<string>& strs) {
-          if(strs.empty()){
-              return " ";
+          if (strs.empty()) return "";
+  
+          string prefix = strs[0];
+  
+          for (int i = 1; i < strs.size(); i++) {
+              while (strs[i].find(prefix) != 0) {
+                  prefix = prefix.substr(0, prefix.size() - 1);
+                  if (prefix.empty()) return "";
+              }
           }
-         int n = strs.size();
-         string str = strs[0];
-         for(int i = 1; i < n; i++){
-          while(strs[i].find(str)!=0){
-              str=str.substr(0, str.size() - 1);
-          }
-         }
-         return str;
+          return prefix;
       }
   };
+  

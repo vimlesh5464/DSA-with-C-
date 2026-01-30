@@ -1,6 +1,9 @@
 #include <iostream>
 #include<vector>
 using namespace std;
+// Time: O(n)
+
+// Space: O(n) (extra list ans)
 class Solution {
   public:
       void moveZeroes(vector<int>& nums) {
@@ -20,3 +23,26 @@ class Solution {
           }
       }
   };
+
+//   Time: O(n)
+
+// Space: O(1) 
+  class Solution {
+    public:
+        void moveZeroes(vector<int>& nums) {
+            int k = 0;  // position for next non-zero element
+    
+            for (int i = 0; i < nums.size(); i++) {
+                if (nums[i] != 0) {
+                    nums[k] = nums[i];
+                    k++;
+                }
+            }
+    
+            // fill remaining positions with 0
+            for (int i = k; i < nums.size(); i++) {
+                nums[i] = 0;
+            }
+        }
+    };
+    

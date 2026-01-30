@@ -1,7 +1,13 @@
 #include<iostream>
 #include<stack>
 #include<string>
-using namespace std;
+ using namespace std;
+
+// | Approach          | Time | Space | Notes                           |
+// | ----------------- | ---- | ----- | ------------------------------- |
+// | **Stack**         | O(n) | O(n)  | More intuitive, but extra stack |
+// | **Depth Counter** | O(n) | O(n)  | Cleaner, faster, preferred      |
+
 
 class Solution {
   public:

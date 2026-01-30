@@ -1,6 +1,7 @@
 #include <iostream>
 #include<string>
 using namespace std;
+//leetcode style
 class Solution {
   public:
       string reverseWords(string s) {
@@ -33,3 +34,39 @@ class Solution {
       }
   };
   
+//gfg style
+  //Reverse each word in a given string
+
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.size();
+        string result = "";
+        int i = 0;
+
+        while (i < n) {
+            // 1️⃣ Skip leading / multiple spaces
+            while (i < n && s[i] == ' ') i++;
+
+            if (i >= n) break;
+
+            // 2️⃣ Find the word
+            int start = i;
+            while (i < n && s[i] != ' ') i++;
+            int end = i - 1;
+
+            // 3️⃣ Reverse the word
+            for (int j = end; j >= start; j--) {
+                result += s[j];
+            }
+
+            // 4️⃣ Add space after each word
+            result += ' ';
+        }
+
+        // 5️⃣ Remove trailing space
+        if (!result.empty()) result.pop_back();
+
+        return result;
+    }
+};

@@ -4,6 +4,11 @@
 #include<unordered_map>
 using namespace std;
 
+// | Metric               | Complexity   |
+// | -------------------- | ------------ |
+// | **Time Complexity**  | **O(n · k)** |
+// | **Space Complexity** | **O(n · k)** |
+
 class Solution {
   public:
       vector<vector<string>> groupAnagrams(vector<string>& strs) {
@@ -23,6 +28,8 @@ class Solution {
           }
   
           vector<vector<string>> result;
+          //for (const pair<const string, vector<string>>& it : mp)
+
           for (auto it : mp) result.push_back(it.second);
   
           return result;

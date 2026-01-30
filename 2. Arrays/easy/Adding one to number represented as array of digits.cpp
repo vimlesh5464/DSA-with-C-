@@ -26,25 +26,20 @@ vector<int> addOne(vector<int> &arr) {
 //[Approach - 2] - O(n) Time and O(1) Space
 vector<int> addOne(vector<int> &arr) {
 
-  // initialize an index to end of array
-  int index = arr.size() - 1;
+  int n = arr.size();
+        
+        // Start from last digit
+        for (int i = n - 1; i >= 0; i--) {
+            if (arr[i] < 9) {
+                arr[i]++;     // no carry, done
+                return arr;
+            }
+            arr[i] = 0;       // carry forward
+        }
 
-  // while the index is valid and the value
-  // at index is 9
-  while (index >= 0 && arr[index] == 9)
-      arr[index--] = 0;
-
-  // if index < 0 (if all arr were 9)
-  if (index < 0)
-
-      // insert an one at the beginning of the vector
-      arr.insert(arr.begin(), 1, 1);
-
-  // else increment the value at [index]
-  else
-      arr[index]++;
-
-  return arr;
+        // If we reach here, all digits were 9
+        arr.insert(arr.begin(), 1);
+        return arr;
 }
 
 
