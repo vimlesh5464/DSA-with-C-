@@ -3,36 +3,64 @@
 using namespace std;
 
 class Solution {
-public:
-    // Recursive helper for linear House Robber
-    int helper(int i, vector<int>& nums, vector<int>& dp, int start) {
-        if (i < start) return 0;            // No houses left
-        if (i == start) return nums[start]; // Only one house in range
-        if (dp[i] != -1) return dp[i];     // Memoization
+  public:
+      int solve(vector<int>& nums, int i, int end) {
+          // Base case
+          if (i > end) return 0;
+  
+          // Take or skip
+          int take = nums[i] + solve(nums, i + 2, end);
+          int skip = solve(nums, i + 1, end);
+  
+          return max(take, skip);
+      }
+  
+      int rob(vector<int>& nums) {
+          int n = nums.size();
+  
+          // Edge case
+          if (n == 1) return nums[0];
+  
+          // Case 1: Exclude last house
+          int case1 = solve(nums, 0, n - 2);
+  
+          // Case 2: Exclude first house
+          int case2 = solve(nums, 1, n - 1);
+  
+          return max(case1, case2);
+      }
+  };
 
-        int rob = nums[i] + helper(i - 2, nums, dp, start); // Rob current
-        int notRob = helper(i - 1, nums, dp, start);        // Skip current
-
-        return dp[i] = max(rob, notRob);
-    }
-
-    int rob(vector<int>& nums) {
-        int n = nums.size();
-        if (n == 1) return nums[0];
-        if (n == 2) return max(nums[0], nums[1]);
-
-        // Case 1: Rob houses 0 to n-2 (exclude last)
-        vector<int> dp1(n, -1);
-        int case1 = helper(n - 2, nums, dp1, 0);
-
-        // Case 2: Rob houses 1 to n-1 (exclude first)
-        vector<int> dp2(n, -1);
-        int case2 = helper(n - 1, nums, dp2, 1);
-
-        return max(case1, case2);
-    }
-};
-
+  class Solution {
+    public:
+        int solve(vector<int>& nums, int i, int end, vector<int>& dp) {
+            // Base case
+            if (i > end) return 0;
+    
+            // Already computed
+            if (dp[i] != -1) return dp[i];
+    
+            int take = nums[i] + solve(nums, i + 2, end, dp);
+            int skip = solve(nums, i + 1, end, dp);
+    
+            return dp[i] = max(take, skip);
+        }
+    
+        int rob(vector<int>& nums) {
+            int n = nums.size();
+            if (n == 1) return nums[0];
+    
+            // Case 1: Exclude last house
+            vector<int> dp1(n, -1);
+            int case1 = solve(nums, 0, n - 2, dp1);
+    
+            // Case 2: Exclude first house
+            vector<int> dp2(n, -1);
+            int case2 = solve(nums, 1, n - 1, dp2);
+    
+            return max(case1, case2);
+        }
+    };
 class Solution {
   public:
       // Linear House Robber DP

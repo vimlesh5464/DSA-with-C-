@@ -4,57 +4,71 @@
 #include<queue>
 using namespace std;
 
-bool dfs(int i, int j, vector<vector<int>>& grid, vector<vector<bool>>& vis) {
+class Solution {
+public:
+    // DFS function
+    bool dfs(int i, int j, vector<vector<int>>& grid, vector<vector<bool>>& vis) {
+        int n = grid.size();
 
-    int n = grid.size();
+        // Out of bounds
+        if(i < 0 || j < 0 || i >= n || j >= n)
+            return false;
 
-    // Out of bounds
-    if(i < 0 || j < 0 || i >= n || j >= n)
-        return false;
+        // Blocked cell or visited
+        if(grid[i][j] == 0 || vis[i][j])
+            return false;
 
-    // Blocked cell or visited
-    if(grid[i][j] == 0 || vis[i][j])
-        return false;
+        // Destination
+        if(grid[i][j] == 2)
+            return true;
 
-    // Destination
-    if(grid[i][j] == 2)
-        return true;
+        vis[i][j] = true;
 
-    vis[i][j] = true;
+        // Explore 4 directions
+        return dfs(i+1, j, grid, vis) ||
+               dfs(i-1, j, grid, vis) ||
+               dfs(i, j+1, grid, vis) ||
+               dfs(i, j-1, grid, vis);
+    }
 
-    // Explore 4 directions
-    return dfs(i+1, j, grid, vis) ||
-           dfs(i-1, j, grid, vis) ||
-           dfs(i, j+1, grid, vis) ||
-           dfs(i, j-1, grid, vis);
-}
+    // Function to check if path exists from source to destination
+    bool is_Possible(vector<vector<int>>& grid) {
+        int n = grid.size();
+        vector<vector<bool>> vis(n, vector<bool>(n, false)); // 2D visited array
 
+        // Find source cell (value 1)
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(grid[i][j] == 1) {
+                    // Start DFS from source
+                    return dfs(i, j, grid, vis);
+                }
+            }
+        }
+
+        return false; // Source not found
+    }
+};
 
 int main() {
     int n;
+    cout << "Enter grid size (n x n): ";
     cin >> n;
 
     vector<vector<int>> grid(n, vector<int>(n));
+    cout << "Enter grid values row by row (0=blocked, 1=source, 2=destination, 3=open path):\n";
 
-    int si = -1, sj = -1; // source position
-
-    // Input matrix + find source(1)
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) {
             cin >> grid[i][j];
-            if(grid[i][j] == 1){
-                si = i;
-                sj = j;
-            }
         }
     }
 
-    vector<vector<bool>> vis(n, vector<bool>(n, false));
-
-    if(dfs(si, sj, grid, vis))
-        cout << "1\n";  // path exists
+    Solution sol;
+    if(sol.is_Possible(grid))
+        cout << "true\n";
     else
-        cout << "0\n";  // no path
+        cout << "false\n";
 
     return 0;
 }

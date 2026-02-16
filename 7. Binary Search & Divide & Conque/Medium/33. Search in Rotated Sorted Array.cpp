@@ -4,6 +4,69 @@ using namespace std;
 
 class Solution {
 public:
+    int search(vector<int>& nums, int target) {
+        int left = 0, right = nums.size() - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (nums[mid] == target) return mid;
+
+            // Left half is sorted
+            if (nums[left] <= nums[mid]) {
+                if (nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1; // target in left half
+                } else {
+                    left = mid + 1;  // target in right half
+                }
+            }
+            // Right half is sorted
+            else {
+                if (nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;  // target in right half
+                } else {
+                    right = mid - 1; // target in left half
+                }
+            }
+        }
+
+        return -1; // target not found
+    }
+};
+
+int main() {
+    Solution sol;
+    int n, target;
+
+    // Input size of array
+    cout << "Enter size of array: ";
+    cin >> n;
+
+    vector<int> nums(n);
+
+    // Input array elements
+    cout << "Enter " << n << " elements of rotated sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    // Input target
+    cout << "Enter target to search: ";
+    cin >> target;
+
+    int result = sol.search(nums, target);
+
+    if (result != -1) {
+        cout << "Index of " << target << " is: " << result << endl;
+    } else {
+        cout << target << " not found in the array." << endl;
+    }
+
+    return 0;
+}
+
+class Solution {
+public:
     int searchHelper(vector<int>& nums, int si, int ei, int target) {
         if (si > ei) return -1;
 

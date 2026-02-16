@@ -28,30 +28,28 @@ void deleteMid(stack<int>& st, int size) {
     }
 }
 
+void deleteMiddle(stack<int>& st, int k) {
+  // Base case: middle element
+  if (k == 1) {
+      st.pop();
+      return;
+  }
+
+  int temp = st.top();
+  st.pop();
+
+  // Recursive call
+  deleteMiddle(st, k - 1);
+
+  // Push back
+  st.push(temp);
+}
 //[Expected Approach 1] - Using Recursion - O(n) Time and O(n) Space
 // Remove elements of the stack recursively until the count of removed
 //  elements becomes half the initial size of the stack, now the top element
 //   is the middle element thus pop it and push the previously removed elements in the reverse order.
-void deleteMid_util(stack<int>& st, int sizeOfStack, int current)
-{
-    if(current == sizeOfStack / 2)
-    {
-        st.pop();
-        return;
-    }
 
-    int x = st.top();
-    st.pop();
-    current += 1;
 
-    deleteMid_util(st, sizeOfStack, current);
-    st.push(x);
-}
-
-void deleteMid(stack<int>& st, int sizeOfStack)
-{
-    deleteMid_util(st, sizeOfStack, 0);
-}
 
 // [Expected Approach 2] - Using Stack - O(n) Time and O(n) Space
 

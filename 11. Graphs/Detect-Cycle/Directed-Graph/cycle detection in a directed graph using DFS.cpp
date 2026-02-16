@@ -4,29 +4,23 @@
 #include <queue>
 using namespace std;
 
-class Graph {
-    int V;
-    list<int>* adj;
 
+class Solution {
 public:
-    Graph(int V) {
-        this->V = V;
-        adj = new list<int>[V];
-    }
 
-    void addEdge(int u, int v) {
-        adj[u].push_back(v);
-    }
+    bool dfsCycleHelper(int src, vector<vector<int>> &adj,
+                        vector<bool>& vis, vector<bool>& recPath) {
 
-    bool dfsCycleHelper(int src, vector<bool>& vis, vector<bool>& recPath) {
         vis[src] = true;
         recPath[src] = true;
 
         for (int v : adj[src]) {
+
             if (!vis[v]) {
-                if (dfsCycleHelper(v, vis, recPath))
+                if (dfsCycleHelper(v, adj, vis, recPath))
                     return true;
-            } else if (recPath[v]) {
+            }
+            else if (recPath[v]) {
                 return true;
             }
         }
@@ -35,31 +29,41 @@ public:
         return false;
     }
 
-    bool isCyclic() {
-        vector<bool> vis(V, false);
-        vector<bool> recPath(V, false);
+    bool isCyclic(int V, vector<vector<int>> &adj) {
 
-        for (int i = 0; i < V; i++) {
-            if (!vis[i]) {
-                if (dfsCycleHelper(i, vis, recPath))
+        vector<bool> vis(V,false);
+        vector<bool> recPath(V,false);
+
+        for(int i = 0; i < V; i++){
+            if(!vis[i]){
+                if(dfsCycleHelper(i, adj, vis, recPath))
                     return true;
             }
         }
+
         return false;
     }
 };
 
 int main() {
-    Graph graph(4);
-    graph.addEdge(0, 1);
-    graph.addEdge(1, 2);
-    graph.addEdge(2, 3);
-    graph.addEdge(3, 1); // back edge -> cycle
 
-    if (graph.isCyclic())
-        cout << "Graph contains a cycle\n";
+    int V, E;
+    cin >> V >> E;
+
+    vector<vector<int>> adj(V);
+
+    for(int i = 0; i < E; i++){
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);   // directed edge
+    }
+
+    Solution obj;
+
+    if(obj.isCyclic(V, adj))
+        cout << "Cycle Present\n";
     else
-        cout << "Graph does not contain a cycle\n";
+        cout << "No Cycle\n";
 
     return 0;
 }

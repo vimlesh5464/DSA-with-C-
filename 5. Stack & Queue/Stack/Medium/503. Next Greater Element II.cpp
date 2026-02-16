@@ -3,6 +3,24 @@
 #include<stack>
 using namespace std;
 
+vector<int> nextGreater(vector<int> &arr) {
+  int n = arr.size();
+
+  vector<int> res(n, -1);
+  for (int i = 0; i < n; i++) {
+
+      for (int j = 1; j < n; j++) {
+
+          // Checking for next greater element
+          if (arr[i] < arr[(i + j)%n]) {
+              res[i] = arr[(i + j)%n];
+              break;
+          }
+      }
+  }
+
+  return res;
+}
 
 // ✅ Time Complexity: O(n) (each element pushed/popped at most once).
 // ✅ Space Complexity: O(n) (for stack).

@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+using namespace std;
 
 class Solution {
 public:
@@ -14,35 +15,26 @@ public:
                 return true;
             }
 
-            // ⚠️ Case 1: Handle Duplicates (Worst-case O(n) scenario)
-            // If the values at low, mid, and high are all the same,
-            // we cannot determine which half is sorted. Safest action is to shrink the range.
+            // Handle duplicates (worst-case O(n))
             if (nums[low] == nums[mid] && nums[mid] == nums[high]) {
                 low++;
                 high--;
                 continue;
             }
 
-            // Case 2: Left half is Sorted (nums[low] <= nums[mid])
+            // Left half is sorted
             if (nums[low] <= nums[mid]) {
-                // Check if the target is within the sorted left half range
                 if (nums[low] <= target && target < nums[mid]) {
-                    // Target is in the left half, discard the right half
                     high = mid - 1;
                 } else {
-                    // Target is NOT in the left half, search the right half
                     low = mid + 1;
                 }
             }
-
-            // Case 3: Right half is Sorted (nums[low] > nums[mid])
-            else { 
-                // Check if the target is within the sorted right half range
+            // Right half is sorted
+            else {
                 if (nums[mid] < target && target <= nums[high]) {
-                    // Target is in the right half, discard the left half
                     low = mid + 1;
                 } else {
-                    // Target is NOT in the right half, search the left half
                     high = mid - 1;
                 }
             }
@@ -52,21 +44,32 @@ public:
     }
 };
 
-
-// Example Usage (for testing purposes):
 int main() {
     Solution s;
-    std::vector<int> nums1 = {2, 5, 6, 0, 0, 1, 2};
-    int target1 = 0;
-    std::cout << "Target 0 in nums1: " << (s.search(nums1, target1) ? "True" : "False") << std::endl; // Output: True
+    int n, target;
 
-    std::vector<int> nums2 = {2, 5, 6, 0, 0, 1, 2};
-    int target2 = 3;
-    std::cout << "Target 3 in nums2: " << (s.search(nums2, target2) ? "True" : "False") << std::endl; // Output: False
+    // Input size of array
+    cout << "Enter the size of the array: ";
+    cin >> n;
 
-    std::vector<int> nums3 = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}; // Worst case with duplicates
-    int target3 = 2;
-    std::cout << "Target 2 in nums3: " << (s.search(nums3, target3) ? "True" : "False") << std::endl; // Output: True
+    vector<int> nums(n);
+
+    // Input array elements
+    cout << "Enter " << n << " elements of the rotated sorted array: ";
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    // Input target
+    cout << "Enter the target to search: ";
+    cin >> target;
+
+    // Search and output
+    if (s.search(nums, target)) {
+        cout << "Target " << target << " is present in the array." << std::endl;
+    } else {
+        cout << "Target " << target << " is NOT present in the array." << std::endl;
+    }
 
     return 0;
 }

@@ -23,10 +23,15 @@ public:
         vector<vector<int>> adj(n);
 
         // Build graph
-        for (auto &e : edges) {
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
-        }
+        // for (auto &e : edges) {
+        //     adj[e[0]].push_back(e[1]);
+        //     adj[e[1]].push_back(e[0]);
+        // }
+        for (vector<int> &e : edges) {
+          adj[e[0]].push_back(e[1]);
+          adj[e[1]].push_back(e[0]);
+      }
+      
 
         vector<bool> vis(n, false);
         return dfs(source, destination, adj, vis);

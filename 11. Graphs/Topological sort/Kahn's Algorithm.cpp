@@ -3,55 +3,79 @@
 #include<vector>
 using namespace std;
 
+
 class Solution {
 public:
-	//Function to return list containing vertices in Topological order.
-	vector<int> topoSort(int V, vector<int> adj[])
-	{
-		vector<int> indegree(0);
-		for (int i = 0; i < V; i++) {
-			for (auto it : adj[i]) {
-				indegree[it]++;
-			}
-		}
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
 
-		queue<int> q;
-		for (int i = 0; i < V; i++) {
-			if (indegree[i] == 0) {
-				q.push(i);
-			}
-		}
-		vector<int> topo;
-		while (!q.empty()) {
-			int node = q.front();
-			q.pop();
-			topo.push_back(node);
-			// node is in your topo sort
-			// so please remove it from the indegree
+        // Step 1: Build adjacency list
+        vector<vector<int>> adj(V);
+        for(auto &it : edges){
+            int u = it[0];
+            int v = it[1];
+            adj[u].push_back(v);
+        }
 
-			for (auto it : adj[node]) {
-				indegree[it]--;
-				if (indegree[it] == 0) q.push(it);
-			}
-		}
+        // Step 2: Calculate indegree
+        vector<int> indegree(V, 0);
+        for(int i = 0; i < V; i++){
+            for(auto it : adj[i]){
+                indegree[it]++;
+            }
+        }
 
-		return topo;
-	}
+        // Step 3: Push all 0 indegree nodes
+        queue<int> q;
+        for(int i = 0; i < V; i++){
+            if(indegree[i] == 0){
+                q.push(i);
+            }
+        }
+
+        // Step 4: Kahn’s Algorithm
+        vector<int> topo;
+        while(!q.empty()){
+            int node = q.front();
+            q.pop();
+            topo.push_back(node);
+
+            for(auto it : adj[node]){
+                indegree[it]--;
+                if(indegree[it] == 0){
+                    q.push(it);
+                }
+            }
+        }
+
+        return topo;
+    }
 };
 
+int main(){
 
-int main() {
+    int V, E;
+    cin >> V >> E;
 
-	//V = 6;
-	vector<int> adj[6] = {{}, {}, {3}, {1}, {0, 1}, {0, 2}};
-	int V = 6;
-	Solution obj;
-	vector<int> ans = obj.topoSort(V, adj);
+    vector<vector<int>> edges;
 
-	for (auto node : ans) {
-		cout << node << " ";
-	}
-	cout << endl;
+    for(int i = 0; i < E; i++){
+        int u, v;
+        cin >> u >> v;
+        edges.push_back({u, v});
+    }
 
-	return 0;
+    Solution obj;
+    vector<int> ans = obj.topoSort(V, edges);
+
+    if(ans.size() != V){
+        cout << "Cycle Present - Topological Sort Not Possible\n";
+    }
+    else{
+        cout << "Topological Order:\n";
+        for(auto it : ans){
+            cout << it << " ";
+        }
+    }
+
+    return 0;
 }

@@ -1,5 +1,5 @@
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 class Solution {
@@ -7,21 +7,18 @@ public:
     bool dfs(vector<vector<char>>& board, string& word, int i, int j, int index) {
         if (index == word.size()) return true;
 
-        // Boundary and character match check
         if (i < 0 || i >= board.size() || j < 0 || j >= board[0].size() || board[i][j] != word[index])
             return false;
 
-        char temp = board[i][j];  // Save current cell
-        board[i][j] = '#';        // Mark as visited
+        char temp = board[i][j];
+        board[i][j] = '#';
 
-        // Explore all 4 directions
         bool found = dfs(board, word, i + 1, j, index + 1) ||
                      dfs(board, word, i - 1, j, index + 1) ||
                      dfs(board, word, i, j + 1, index + 1) ||
                      dfs(board, word, i, j - 1, index + 1);
 
-        board[i][j] = temp;       // Backtrack (restore original character)
-
+        board[i][j] = temp;
         return found;
     }
 
@@ -31,12 +28,9 @@ public:
 
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                if (dfs(board, word, i, j, 0)) {
-                    return true;
-                }
+                if (dfs(board, word, i, j, 0)) return true;
             }
         }
-
         return false;
     }
 };
@@ -44,19 +38,30 @@ public:
 int main() {
     Solution sol;
 
-    vector<vector<char>> board = {
-        {'A','B','C','E'},
-        {'S','F','C','S'},
-        {'A','D','E','E'}
-    };
+    int m, n;
+    cout << "Enter number of rows and columns of the board: ";
+    cin >> m >> n;
 
-    string word1 = "ABCCED";
-    string word2 = "SEE";
-    string word3 = "ABCB";
+    vector<vector<char>> board(m, vector<char>(n));
+    cout << "Enter the board characters row by row (space separated):\n";
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> board[i][j];
+        }
+    }
 
-    cout << "Word \"" << word1 << "\" exists: " << (sol.exist(board, word1) ? "true" : "false") << endl;
-    cout << "Word \"" << word2 << "\" exists: " << (sol.exist(board, word2) ? "true" : "false") << endl;
-    cout << "Word \"" << word3 << "\" exists: " << (sol.exist(board, word3) ? "true" : "false") << endl;
+    int t;
+    cout << "Enter number of words to search: ";
+    cin >> t;
+
+    for (int k = 0; k < t; k++) {
+        string word;
+        cout << "Enter word " << k + 1 << ": ";
+        cin >> word;
+
+        cout << "Word \"" << word << "\" exists: "
+             << (sol.exist(board, word) ? "true" : "false") << endl;
+    }
 
     return 0;
 }
