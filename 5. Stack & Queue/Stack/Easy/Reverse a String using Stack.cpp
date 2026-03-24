@@ -1,3 +1,16 @@
+// You are given a string s , the task is to reverse the string using stack.
+
+// Examples:
+
+// Input: s ="GeeksforGeeks"
+// Output:  skeeGrofskeeG
+
+// Input: s ="Geek"
+// Output: keeG
+
+// Constraints:
+// 1 ≤ s.length() ≤ 100
+
 //Reverse a String using Stack
 // Time Complexity: O(n) Only one traversal to push and one to pop so O(n)+O(n) = O(n).
 // Auxiliary Space: O(n) Due to the stack 

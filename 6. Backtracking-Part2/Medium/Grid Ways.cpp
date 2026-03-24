@@ -1,16 +1,6 @@
 #include <iostream>
+#include<vector>
 using namespace std;
-////solution 1
-int gridWays(int i, int j, int n, int m) {
-    // Base Case: reached bottom-right
-    if (i == n - 1 && j == m - 1) return 1;
-
-    // Boundary Case: out of grid
-    if (i >= n || j >= m) return 0;
-
-    // Move Down + Move Right
-    return gridWays(i + 1, j, n, m) + gridWays(i, j + 1, n, m);
-}
 
 //solution 2
 int factorial(int n) {
@@ -25,8 +15,20 @@ int gridWays(int n, int m) {
   int den = factorial(n - 1) * factorial(m - 1);
   return num / den;
 }
-int main() {
-    int n = 3, m = 3;
-    cout << gridWays(0, 0, n, m);
-    return 0;
+////solution 1
+int gridWays(int i, int j, int n, int m, vector<vector<int>> &grid) {
+  // Out of bounds or blocked cell
+  if(i >= n || j >= m || grid[i][j] == 1) return 0;
+
+  // Reached bottom-right cell
+  if(i == n - 1 && j == m - 1) return 1;
+
+  // Move Down + Move Right
+  return gridWays(i + 1, j, n, m, grid) + gridWays(i, j + 1, n, m, grid);
+}
+
+int uniquePaths(vector<vector<int>> &grid) {
+  int n = grid.size();
+  int m = grid[0].size();
+  return gridWays(0, 0, n, m, grid);
 }

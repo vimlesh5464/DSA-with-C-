@@ -1,8 +1,52 @@
+// Given two strings s and t, return true if t is an of s, and false otherwise.
+
+ 
+
+// Example 1:
+
+// Input: s = "anagram", t = "nagaram"
+
+// Output: true
+
+// Example 2:
+
+// Input: s = "rat", t = "car"
+
+// Output: false
+
+ 
+
+// Constraints:
+
+//     1 <= s.length, t.length <= 5 * 104
+//     s and t consist of lowercase English letters.
+
+ 
+
+// Follow up: What if the inputs contain Unicode characters? How would you adapt your solution to such a case?
 #include <iostream>
 #include<string>
 #include<vector>
 using namespace std;
 
+class Solution {
+  public:
+      bool isAnagram(string s, string t) {
+          if (s.length() != t.length()) return false;
+          for( int i = 0; i < s.length(); i++){
+              bool found = false;
+              for(int j = 0; j < t.length(); j++){
+                  if(s[i]==t[j]){
+                      t[j]='#';
+                      found = true;
+                      break;
+                  }
+              }
+              if (!found) return false;
+          }
+          return true;
+      }
+  };
 class Solution {
 public:
     bool isAnagram(string s, string t) {

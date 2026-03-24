@@ -1,5 +1,17 @@
-// C++ program to find the digit sum by 
-// repetitively Adding its digits
+// Given an integer n, we need to repeatedly find the sum of its digits until the result becomes a single-digit number.
+// Examples:
+
+//     Input: n = 1234 
+//     Output: 1 
+//     Explanation:
+//     Step 1: 1 + 2 + 3 + 4 = 10 
+//     Step 2: 1 + 0 = 1
+
+//     Input: n = 5674
+//     Output: 4
+//     Explanation: 
+//     Step 1: 5 + 6 + 7 + 4 = 22 
+//     Step 2: 2 + 2 = 4
 
 #include <iostream>
 using namespace std;

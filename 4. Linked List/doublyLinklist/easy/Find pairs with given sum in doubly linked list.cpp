@@ -1,3 +1,22 @@
+// Given a sorted doubly linked list of positive distinct elements, the task is to find pairs in a doubly-linked list whose sum is equal to the given value x in sorted order.
+
+// Examples:
+
+//     Input:
+//     Find-pairs-with-given-sum-in-doubly-linked-list
+     
+
+
+//     Output: (1, 6), (2,5)
+//     Explanation: We can see that there are two pairs (1, 6) and (2, 5) with sum 7.
+
+//     Input: 
+//     Find-pairs-with-given-sum-in-doubly-linked-list-2
+     
+
+
+//     Output: (1,5)
+//     Explanation: We can see that there is one pair (1, 5) with a sum of 6.
 #include <iostream>
 #include<vector>
 using namespace std;
