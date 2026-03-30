@@ -1,111 +1,66 @@
+// Given a string s, find the length of the longest without duplicate characters.
+
+ 
+
+// Example 1:
+
+// Input: s = "abcabcbb"
+// Output: 3
+// Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers.
+
+// Example 2:
+
+// Input: s = "bbbbb"
+// Output: 1
+// Explanation: The answer is "b", with the length of 1.
+
+// Example 3:
+
+// Input: s = "pwwkew"
+// Output: 3
+// Explanation: The answer is "wke", with the length of 3.
+// Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+
+ 
+
+// Constraints:
+
+//     0 <= s.length <= 5 * 104
+//     s consists of English letters, digits, symbols and spaces.
+
 #include <iostream>
-#include <vector>
-#include <string>
+#include<vector>
 using namespace std;
-
-class Solution
-{
+//Time & Space Complexity:O(n) → each character is visited at most twice and O(1) → mpp size = 256, constant
+class Solution {
 public:
-  // check if substring has all unique characters
-  bool isUnique(string s)
-  {
-    vector<bool> visited(256, false);
+    int lengthOfLongestSubstring(string s) {
+        vector<int> mpp(256, -1); // stores last index of each character
 
-    for (char c : s)
-        if (visited[c]){
-          return false;
-        }else{
-          visited[c] = true;
+        int left = 0, right = 0;
+        int n = s.size();
+        int len = 0;
+
+        while (right < n) {
+            // If current character is repeated, move left pointer
+            if (mpp[s[right]] != -1)
+                left = max(mpp[s[right]] + 1, left);
+
+            // Update last index of current character
+            mpp[s[right]] = right;
+
+            // Update max length
+            len = max(len, right - left + 1);
+            right++;
         }
-    return true;
-  }
-
-  // main function
-  int lengthOfLongestSubstring(string s)
-  {
-    int n = s.size();
-    int maxLen = 0;
-
-    // generate all substrings
-    for (int i = 0; i < n; i++)
-    {
-      string temp = "";
-      for (int j = i; j < n; j++)
-      {
-        temp += s[j]; // substring ban rahi hai
-
-        // check uniqueness
-        if (isUnique(temp))
-        {
-          maxLen = max(maxLen, (int)temp.length());
-        }
-      }
+        return len;
     }
-    return maxLen;
-  }
-};
-class Solution
-{
-public:
-  int lengthOfLongestSubstring(string s)
-  {
-    int n = s.size();
-    int maxLen = 0;
-
-    for (int i = 0; i < n; i++)
-    {
-      vector<bool> visited(256, false); // har i ke liye fresh set
-
-      for (int j = i; j < n; j++)
-      {
-        if (visited[s[j]])
-        {
-          break; // repeat mila → stop
-        }
-
-        visited[s[j]] = true;
-        int currLen = j - i + 1;
-        maxLen = max(maxLen, currLen);
-      }
-    }
-
-    return maxLen;
-  }
-};
-class Solution
-{
-public:
-  int lengthOfLongestSubstring(string s)
-  {
-    vector<int> mpp(256, -1);
-
-    int left = 0, right = 0;
-    int n = s.size();
-    int maxlen = 0;
-    int len = 0;
-    while (right < n)
-    {
-      if (mpp[s[right]] != -1)
-      {
-        if (mpp[s[right]] >= left)
-        {
-          left = mpp[s[right]] + 1;
-        }
-      }
-      mpp[s[right]] = right;
-      len = right - left + 1;
-      maxlen = max(len, maxlen);
-      right++;
-    }
-    return maxlen;
-  }
 };
 
-int main()
-{
-  Solution sol;
-  string str;
-  cin >> str;
-  cout << sol.lengthOfLongestSubstring(str);
-  return 0;
+int main() {
+    Solution s;
+    string str = "abcabcbb";
+    int res = s.lengthOfLongestSubstring(str);
+    cout << "Length of Longest Substring Without Repeating Characters: " << res << endl;
+    return 0;
 }

@@ -1,8 +1,15 @@
-// A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
+// A permutation of an array of integers is an arrangement of its members 
+//into a sequence or linear order.
 
-//     For example, for arr = [1,2,3], the following are all the permutations of arr: [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].
+//     For example, for arr = [1,2,3], the following are all the permutations of arr:
+// [1,2,3], [1,3,2], [2, 1, 3], [2, 3, 1], [3,1,2], [3,2,1].
 
-// The next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).
+// The next permutation of an array of integers is the next lexicographically greater
+// permutation of its integer. More formally, if all the permutations of the array 
+//are sorted in one container according to their lexicographical order, then the 
+//next permutation of that array is the permutation that follows it in the sorted 
+//container. If such arrangement is not possible, the array must be rearranged as 
+//the lowest possible order (i.e., sorted in ascending order).
 
 //     For example, the next permutation of arr = [1,2,3] is [1,3,2].
 //     Similarly, the next permutation of arr = [2,3,1] is [3,1,2].
@@ -46,28 +53,29 @@ using namespace std;
 // Generate all permutations, sort them, and find the next permutation after the current one.
 // Time Complexity: O(n! * n) → very slow.
 // Space Complexity: O(n!)
-
 class Solution {
-public:
-    void nextPermutation(vector<int>& nums) {
-        vector<vector<int>> perms;
-        sort(nums.begin(), nums.end());
-        do {
-            perms.push_back(nums);
-        } while(next_permutation(nums.begin(), nums.end()));
-
-        for(int i = 0; i < perms.size(); i++){
-            if(perms[i] == nums){
-                if(i+1 < perms.size()){
-                    nums = perms[i+1];
-                } else {
-                    nums = perms[0];
-                }
-                break;
-            }
-        }
-    }
-};
+  public:
+      void nextPermutation(vector<int>& nums) {
+          vector<vector<int>> perms;
+          vector<int> original = nums;  // store original input
+  
+          sort(nums.begin(), nums.end()); // start generating permutations
+          do {
+              perms.push_back(nums);
+          } while(next_permutation(nums.begin(), nums.end()));
+  
+          for(int i = 0; i < perms.size(); i++){
+              if(perms[i] == original){  // compare with original
+                  if(i+1 < perms.size()){
+                      nums = perms[i+1];
+                  } else {
+                      nums = perms[0]; // wrap to smallest
+                  }
+                  break;
+              }
+          }
+      }
+  };
 
 // 🔹 Approach (Optimal In-Place)
 // Steps Recap:

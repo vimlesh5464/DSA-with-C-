@@ -1,4 +1,5 @@
-// Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+// Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ 
+//times.
 
  
 
@@ -27,6 +28,7 @@
  
 #include <iostream>
 #include<vector>
+#include <unordered_map>
 using namespace std;
 
 //Time Complexity: O(N2)
@@ -51,7 +53,31 @@ class Solution {
           return result; // ✅ always return result (even if empty)
       }
   };
-  
+
+//   Time: O(n)
+// Space: O(n)
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size();
+        unordered_map<int, int> countMap;
+        vector<int> result;
+
+        // Count occurrences
+        for(int num : nums) {
+            countMap[num]++;
+        }
+
+        // Find elements with count > n/3
+        for(auto& [num, count] : countMap) {
+            if(count > n/3) {
+                result.push_back(num);
+            }
+        }
+
+        return result;
+    }
+};
 //Time Complexity: O(N) + O(N)
 //Space Complexity: O(1) 
 class Solution {

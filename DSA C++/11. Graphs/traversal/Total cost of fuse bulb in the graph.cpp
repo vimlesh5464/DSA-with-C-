@@ -1,19 +1,27 @@
 // Problem Statement
 
-// Tanmay is celebrating the Diwali festival and wants to decorate their house with LED lights. He checked each bulb in the LED lights to identify which bulbs were not functioning correctly, and placed the LED lights on the floor to form a graph-like structure. 
+// Tanmay is celebrating the Diwali festival and wants to decorate their house with
+// LED lights. He checked each bulb in the LED lights to identify which bulbs were 
+//not functioning correctly, and placed the LED lights on the floor to form a graph-like
+// structure. 
 
-// Given, the price of one bulb represented by the integer 'K' and an undirected graph in the form of a 2D array, can you help him determine the total cost of the non-functioning bulbs.
+// Given, the price of one bulb represented by the integer 'K' and an undirected graph 
+//in the form of a 2D array, can you help him determine the total cost of the 
+//non-functioning bulbs.
 
 // The total number of LED lights is N, starting from (0  to  N).
 
-// And non-functional bulb can be represented by the number of bulb divisible by an integer 'M' and do not count as a 0 number bulb, just because it is always functional to convey the electricity coming.
+// And non-functional bulb can be represented by the number of bulb divisible by an
+// integer 'M' and do not count as a 0 number bulb, just because it is always 
+//functional to convey the electricity coming.
 
 // Given lights forms a connected component
 // Note:
 
 // You have to travel in the graph from 0 integer value.
 // You need to first make the undirected graph from the array in ith-index.
-// Create a bond representing the Edge of a graph, or you have given the chart, then solve the problem.
+// Create a bond representing the Edge of a graph, or you have given the chart, 
+//then solve the problem.
  
 
 // Input Format

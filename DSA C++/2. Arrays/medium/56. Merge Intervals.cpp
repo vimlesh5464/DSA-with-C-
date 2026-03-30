@@ -1,4 +1,6 @@
-// Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+// Given an array of intervals where intervals[i] = [starti, endi],
+// merge all overlapping intervals, and return an array of the non-overlapping 
+//intervals that cover all the intervals in the input.
 
  
 
@@ -37,6 +39,27 @@
 // Time Complexity: O(n²)
 // Space Complexity: O(n)
 //Not recommended for large inputs.
+vector<vector<int>> merge(vector<vector<int>>& intervals) {
+  bool merged;
+  do {
+      merged = false;
+      for(int i = 0; i < intervals.size(); i++) {
+          for(int j = i+1; j < intervals.size(); j++) {
+              // Check overlap
+              if(intervals[i][1] >= intervals[j][0] && intervals[i][0] <= intervals[j][1]) {
+                  // Merge
+                  intervals[i][0] = min(intervals[i][0], intervals[j][0]);
+                  intervals[i][1] = max(intervals[i][1], intervals[j][1]);
+                  intervals.erase(intervals.begin() + j); // remove merged interval
+                  merged = true;
+                  break;
+              }
+          }
+          if(merged) break;
+      }
+  } while(merged);
+  return intervals;
+}
 
 
 // 🔹 Approach 1: Sorting + Merge (Optimal) ✅Idea:

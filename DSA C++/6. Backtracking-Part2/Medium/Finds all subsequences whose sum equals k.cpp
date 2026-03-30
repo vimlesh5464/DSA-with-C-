@@ -1,4 +1,5 @@
-// Given an array arr and target sum k, check whether there exists a subsequence such that the sum of all elements in the subsequence equals the given target sum(k).
+// Given an array arr and target sum k, check whether there exists a subsequence 
+//such that the sum of all elements in the subsequence equals the given target sum(k).
 
 
 // Example:
