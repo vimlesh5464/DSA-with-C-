@@ -1,4 +1,6 @@
-// Given an array containing both positive and negative numbers in random order. The task is to rearrange the array elements so that all negative numbers appear before all positive numbers.
+// Given an array containing both positive and negative numbers in random order.
+// The task is to rearrange the array elements so that all negative numbers appear
+// before all positive numbers.
 
 // Note:
 

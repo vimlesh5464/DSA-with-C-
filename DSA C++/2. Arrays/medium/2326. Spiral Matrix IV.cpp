@@ -31,55 +31,96 @@
 //     The number of nodes in the list is in the range [1, m * n].
 //     0 <= Node.val <= 1000
 
- 
 #include <iostream>
-#include<vector>
+#include <vector>
 using namespace std;
 
 class ListNode {
-  public:
-      int val;
-      ListNode* next;
-      ListNode(int x) : val(x), next(NULL) {}
-  };
+public:
+    int val;
+    ListNode* next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
 class Solution {
-  public:
-      vector<vector<int>> spiralMatrix(int m, int n, ListNode* head) {
-          vector<vector<int>> matrix(m, vector<int>(n, -1));
-  
-          int top = 0, bottom = m - 1;
-          int left = 0, right = n - 1;
-  
-          ListNode* curr = head;
-  
-          while (curr && top <= bottom && left <= right) {
-  
-              for (int i = left; i <= right && curr; i++) {
-                  matrix[top][i] = curr->val;
-                  curr = curr->next;
-              }
-              top++;
-  
-              for (int i = top; i <= bottom && curr; i++) {
-                  matrix[i][right] = curr->val;
-                  curr = curr->next;
-              }
-              right--;
-  
-              for (int i = right; i >= left && curr; i--) {
-                  matrix[bottom][i] = curr->val;
-                  curr = curr->next;
-              }
-              bottom--;
-  
-              for (int i = bottom; i >= top && curr; i--) {
-                  matrix[i][left] = curr->val;
-                  curr = curr->next;
-              }
-              left++;
-          }
-  
-          return matrix;
-      }
-  };
-  
+public:
+    vector<vector<int>> spiralMatrix(int m, int n, ListNode* head) {
+        vector<vector<int>> matrix(m, vector<int>(n, -1));
+
+        int top = 0, bottom = m - 1;
+        int left = 0, right = n - 1;
+
+        ListNode* curr = head;
+
+        while (curr && top <= bottom && left <= right) {
+
+            for (int i = left; i <= right && curr; i++) {
+                matrix[top][i] = curr->val;
+                curr = curr->next;
+            }
+            top++;
+
+            for (int i = top; i <= bottom && curr; i++) {
+                matrix[i][right] = curr->val;
+                curr = curr->next;
+            }
+            right--;
+
+            for (int i = right; i >= left && curr; i--) {
+                matrix[bottom][i] = curr->val;
+                curr = curr->next;
+            }
+            bottom--;
+
+            for (int i = bottom; i >= top && curr; i--) {
+                matrix[i][left] = curr->val;
+                curr = curr->next;
+            }
+            left++;
+        }
+
+        return matrix;
+    }
+};
+
+int main() {
+    int m, n;
+    cout << "Enter rows (m) and columns (n): ";
+    cin >> m >> n;
+
+    int size;
+    cout << "Enter number of elements in linked list: ";
+    cin >> size;
+
+    if (size == 0) {
+        cout << "Empty list!" << endl;
+        return 0;
+    }
+
+    // Create linked list
+    cout << "Enter elements: ";
+    int x;
+    cin >> x;
+    ListNode* head = new ListNode(x);
+    ListNode* temp = head;
+
+    for (int i = 1; i < size; i++) {
+        cin >> x;
+        temp->next = new ListNode(x);
+        temp = temp->next;
+    }
+
+    Solution obj;
+    vector<vector<int>> result = obj.spiralMatrix(m, n, head);
+
+    // Print matrix
+    cout << "\nSpiral Matrix:\n";
+    for (auto &row : result) {
+        for (auto &val : row) {
+            cout << val << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}

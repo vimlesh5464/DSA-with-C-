@@ -21,6 +21,27 @@
 #include <iostream>
 #include<vector>
 using namespace std;
+class Solution {
+  public:
+    bool helper(vector<int>& arr, int n, int sum) {
+        // Base cases
+        if (sum == 0) return true;
+        if (n == 0) return false;
+
+        // If current element is greater than sum, skip it
+        if (arr[n - 1] > sum)
+            return helper(arr, n - 1, sum);
+
+        // Include OR exclude the current element
+        return helper(arr, n - 1, sum) || 
+               helper(arr, n - 1, sum - arr[n - 1]);
+    }
+
+    bool isSubsetSum(vector<int>& arr, int sum) {
+        int n = arr.size();
+        return helper(arr, n, sum);
+    }
+};
 
 class Solution {
   public:

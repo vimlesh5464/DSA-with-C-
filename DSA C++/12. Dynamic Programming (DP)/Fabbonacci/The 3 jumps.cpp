@@ -61,6 +61,29 @@
 #include <algorithm>
 using namespace std;
 
+
+long long solve(int i, vector<long long>& V) {
+    // Base case
+    if (i == 0) return 0;
+
+    long long ans = 1e18;
+
+    // Jump from i-1
+    ans = min(ans, solve(i - 1, V) + abs(V[i] - V[i - 1]));
+
+    // Jump from i-2
+    if (i >= 2)
+        ans = min(ans, solve(i - 2, V) + abs(V[i] - V[i - 2]));
+
+    // Jump from i-3
+    if (i >= 3)
+        ans = min(ans, solve(i - 3, V) + abs(V[i] - V[i - 3]));
+
+    return ans;
+}
+
+
+
 int main() {
     int n;
     cin >> n;

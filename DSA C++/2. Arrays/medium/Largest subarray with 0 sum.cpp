@@ -1,6 +1,8 @@
-// Given an array arr[] containing both positive and negative integers, the task is to find the length of the longest subarray with a sum equals to 0.
+// Given an array arr[] containing both positive and negative integers, 
+//the task is to find the length of the longest subarray with a sum equals to 0.
 
-// Note: A subarray is a contiguous part of an array, formed by selecting one or more consecutive elements while maintaining their original order.
+// Note: A subarray is a contiguous part of an array, formed by selecting 
+//one or more consecutive elements while maintaining their original order.
 
 // Examples:
 
@@ -23,6 +25,23 @@
 #include<vector>
 #include<unordered_map>
 using namespace std;
+int solveBruteForce(vector<int>& a) {
+  int n = a.size();
+  int maxLen = 0;
+
+  for (int i = 0; i < n; i++) {
+      int sum = 0;
+      for (int j = i; j < n; j++) {
+          sum += a[j];
+          if (sum == 0) {
+              maxLen = max(maxLen, j - i + 1);
+          }
+      }
+  }
+
+  return maxLen;
+}
+
 
 int solve(vector<int>& a) {
   int maxLen = 0;

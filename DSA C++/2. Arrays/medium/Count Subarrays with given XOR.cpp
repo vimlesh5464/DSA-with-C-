@@ -1,4 +1,5 @@
-// Given an array of integers arr[] and a number k, count the number of subarrays having XOR of their elements as k.
+// Given an array of integers arr[] and a number k, count the number of subarrays
+// having XOR of their elements as k.
 
 // Note: It is guranteed that the total count will fit within a 32-bit integer.
 
@@ -22,39 +23,55 @@
 // 0 ≤ k ≤ 105
 #include<iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
-int subarraysWithXorK(vector<int> a, int k) {
-    int n = a.size(); //size of the given array.
-    int xr = 0;
-    map<int, int> mpp; //declaring the map.
-    mpp[xr]++; //setting the value of 0.
-    int cnt = 0;
-
-    for (int i = 0; i < n; i++) {
-        // prefix XOR till index i:
-        xr = xr ^ a[i];
-
-        //By formula: x = xr^k:
-        int x = xr ^ k;
-
-        // add the occurrence of xr^k
-        // to the count:
-        cnt += mpp[x];
-
-        // Insert the prefix xor till index i
-        // into the map:
-        mpp[xr]++;
+class Solution {
+  public:
+    long scountSubarraysXOR(vector<int> &A, int B) {
+        // code here
+        int count = 0;
+        // Traverse all starting points
+        for (int i = 0; i < A.size(); i++) {
+            // Maintain xor of current subarray
+            int xorVal = 0;
+            // Extend subarray till end
+            for (int j = i; j < A.size(); j++) {
+                // Update xor
+                xorVal ^= A[j];
+                // If xor equals B, increment count
+                if (xorVal == B) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
-    return cnt;
+};
+int countSubarraysXOR(vector<int>& A, int B) {
+  unordered_map<int, int> freq;
+  int count = 0, xorSum = 0;
+
+  for (int i = 0; i < A.size(); i++) {
+      xorSum ^= A[i];
+
+      if (xorSum == B)
+          count++;
+
+      if (freq.find(xorSum ^ B) != freq.end())
+          count += freq[xorSum ^ B];
+
+      freq[xorSum]++;
+  }
+
+  return count;
 }
 
 int main()
 {
     vector<int> a = {4, 2, 2, 6, 4};
     int k = 6;
-    int ans = subarraysWithXorK(a, k);
+    int ans = countSubarraysXOR(a, k);
     cout << "The number of subarrays with XOR k is: "
          << ans << "\n";
     return 0;
