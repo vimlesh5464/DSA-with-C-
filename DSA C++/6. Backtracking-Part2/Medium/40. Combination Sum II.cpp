@@ -31,6 +31,7 @@
  
 
 #include<iostream>
+#include<unordered_set>
 #include<set>
 #include<vector>
 using namespace std;
@@ -38,12 +39,13 @@ using namespace std;
 class Solution {
   public:
   void helper(vector<int>& candidates,int target,int i,vector<int>&subset,set<vector<int>>&ans){
-      if(i==candidates.size()){
+      
           if(target==0){
               ans.insert(subset);
+              return;
           }
-          return;
-      }
+          
+      
   
       if(i==candidates.size() || target<0){
           return;
@@ -94,6 +96,36 @@ class Solution {
             return ans;
         }
     };
+    class Solution {
+      public:
+          void helper(vector<int>& candidates, int target, int start, vector<int>& subset,
+                      vector<vector<int>>& ans) {
+              if (target == 0) {
+                  ans.push_back(subset);
+                  return;
+              }
+              unordered_set<int>seen;
+              for (int i = start; i < candidates.size(); i++) {
+                  if(seen.find(candidates[i])!=seen.end()){
+                      continue;
+                  }
+                  if (candidates[i] > target) break;
+                  seen.insert(candidates[i]);
+                  subset.push_back(candidates[i]);
+                  helper(candidates, target - candidates[i], i + 1, subset, ans);
+                  subset.pop_back();
+              }
+          }
+      
+          vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+              sort(candidates.begin(), candidates.end());
+              vector<vector<int>> ans;
+              vector<int> subset;
+              helper(candidates, target, 0, subset, ans);
+              return ans;
+          }
+      };
+      
     
     int main() {
       Solution obj;

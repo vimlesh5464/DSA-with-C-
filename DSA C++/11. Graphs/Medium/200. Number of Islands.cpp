@@ -1,3 +1,30 @@
+// Given a grid of size n*m (n is the number of rows and m is the number of columns in the grid) consisting of 'W's (Water) and 'L's (Land). Find the number of islands.
+
+// Note: An island is either surrounded by water or the boundary of a grid and is formed by connecting adjacent lands horizontally or vertically or diagonally i.e., in all 8 directions.
+
+// Examples:
+
+// Input: grid[][] = [['L', 'L', 'W', 'W', 'W'], 
+//                 ['W', 'L', 'W', 'W', 'L'], 
+//                 ['L', 'W', 'W', 'L', 'L'], 
+//                 ['W', 'W', 'W', 'W', 'W'], 
+//                 ['L', 'W', 'L', 'L', 'W']]
+// Output: 4
+// Explanation:
+// The image below shows all the 4 islands in the grid.
+ 
+
+// Input: grid[][] = [['W', 'L', 'L', 'L', 'W', 'W', 'W'], 
+//                 ['W', 'W', 'L', 'L', 'W', 'L', 'W']]
+// Output: 2
+// Expanation:
+// The image below shows 2 islands in the grid.
+ 
+
+// Constraints:
+// 1 ≤ n, m ≤ 500
+// grid[i][j] = {'L', 'W'}
+
 #include<iostream>
 #include<list>
 #include<queue>
@@ -45,6 +72,45 @@ class Solution {
           return count;
       }
   };
+  class Solution {
+    public:
+       
+        
+        void dfs(int i, int j, vector<vector<char>>& grid,int n,int m) {
+            // Boundary + water check
+            if(i < 0 || j < 0 || i >= n || j >= m || grid[i][j] == 'W')
+                return;
+            
+            // Mark visited
+            grid[i][j] = 'W';
+            
+            // 8 directions
+            int dx[] = {-1,-1,-1,0,0,1,1,1};
+            int dy[] = {-1,0,1,-1,1,-1,0,1};
+            
+            for(int k = 0; k < 8; k++) {
+                dfs(i + dx[k], j + dy[k], grid,n,m);
+            }
+        }
+        
+        int countIslands(vector<vector<char>>& grid) {
+            int n = grid.size();
+            int m = grid[0].size();
+            
+            int count = 0;
+            
+            for(int i = 0; i < n; i++) {
+                for(int j = 0; j < m; j++) {
+                    if(grid[i][j] == 'L') {
+                        count++;        // New island found
+                        dfs(i, j, grid,n,m);
+                    }
+                }
+            }
+            
+            return count;
+        }
+    };
   
 int main() {
     int m, n;
@@ -59,7 +125,7 @@ int main() {
     }
 
     Solution sol;
-    cout << sol.numIslands(grid);
+    cout << sol.countIslands(grid);
 
     return 0;
 }

@@ -1,12 +1,16 @@
 // You are given a string ‘STR’ consisting of English lowercase letters.
 
-// Your task is to find out all the generalised abbreviations of ‘STR’ and print an array/list of these abbreviations sorted in increasing order.
+// Your task is to find out all the generalised abbreviations of ‘STR’ and print an
+//array/list of these abbreviations sorted in increasing order.
 
 // Note:
 
-// A string is said to be a generalised abbreviations string of ‘STR’ if we remove a substring of length ‘X’ from ‘STR’ and put the number ‘X’ at the place of the removed substring.
+// A string is said to be a generalised abbreviations string of ‘STR’ if we remove
+// a substring of length ‘X’ from ‘STR’ and put the number ‘X’ at the place of the 
+//removed substring.
 
-// We can not remove two consecutive substrings or we can say generalised abbreviations will never have two consecutive numbers.
+// We can not remove two consecutive substrings or we can say generalised 
+//abbreviations will never have two consecutive numbers.
 
 // For example:
 

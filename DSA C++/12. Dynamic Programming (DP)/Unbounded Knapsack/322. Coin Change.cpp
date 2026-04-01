@@ -36,28 +36,29 @@
 using namespace std;
 
 class Solution {
-public:
-    int helper(vector<int>& coins, int amount, vector<int>& dp) {
-        if(amount == 0) return 0;         // 0 coins needed
-        if(amount < 0) return INT_MAX;    // impossible
-
-        if(dp[amount] != -1) return dp[amount];
-
-        int ans = INT_MAX;
-        for(int c : coins) {
-            int sub = helper(coins, amount - c, dp);
-            if(sub != INT_MAX) ans = min(ans, 1 + sub);
-        }
-
-        return dp[amount] = ans;
-    }
-
-    int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount + 1, -1);
-        int ans = helper(coins, amount, dp);
-        return (ans == INT_MAX) ? -1 : ans;
-    }
-};
+  public:
+      int solve(vector<int>& coins, int amount, int i, vector<vector<int>>& dp) {
+          
+          if (amount == 0) return 0;
+          if (i >= coins.size() || amount < 0) return 1e9;
+          
+          if (dp[i][amount] != -1) return dp[i][amount];
+          
+          int take = 1 + solve(coins, amount - coins[i], i, dp);
+          int notTake = solve(coins, amount, i + 1, dp);
+          
+          return dp[i][amount] = min(take, notTake);
+      }
+      
+      int coinChange(vector<int>& coins, int amount) {
+          int n = coins.size();
+          vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
+          
+          int ans = solve(coins, amount, 0, dp);
+          
+          return (ans >= 1e9) ? -1 : ans;
+      }
+  };
 
 class Solution {
   public:
