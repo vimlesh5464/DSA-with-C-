@@ -27,6 +27,48 @@
 using namespace std;
 class Solution {
   public:
+  
+      // 🔁 Pure recursive function (no DP)
+      bool helper(vector<int>& nums, int index, int target) {
+          
+          // ✅ Base case: if target becomes 0 → subset found
+          if (target == 0) return true;
+  
+          // ❌ If no elements left OR target becomes negative
+          if (index < 0 || target < 0) return false;
+  
+          // 🔹 Choice 1: include current element
+          bool include = helper(nums, index - 1, target - nums[index]);
+  
+          // 🔹 Choice 2: exclude current element
+          bool exclude = helper(nums, index - 1, target);
+  
+          // ✅ If any choice works → return true
+          return include || exclude;
+      }
+  
+      bool canPartition(vector<int>& nums) {
+  
+          int totalSum = 0;
+  
+          // 🔢 Calculate total sum of array
+          for (int num : nums) totalSum += num;
+  
+          // ❌ If total sum is odd → cannot divide into equal subsets
+          if (totalSum % 2 != 0) return false;
+  
+          // 🎯 Target is half of total sum
+          int target = totalSum / 2;
+  
+          int n = nums.size();
+  
+          // 🚀 Start recursion from last index
+          return helper(nums, n - 1, target);
+      }
+  };
+  
+class Solution {
+  public:
       bool helper(vector<int>& nums, int index, int target, vector<vector<int>>& dp) {
           // Base Cases
           if (target == 0) return true;          // Found subset

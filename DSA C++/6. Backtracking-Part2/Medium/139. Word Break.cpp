@@ -38,23 +38,43 @@
 using namespace std;
 class Solution {
   public:
+  
+      // Recursive helper function to check if string can be segmented
       bool wordBreakUtil(string s, unordered_set<string> dict, int start) {
+          
+          // ✅ Base case: if we reached end of string → valid segmentation
           if (start == s.size())
               return true;
   
-          if(dict.find(s)!=dict.end()){
+          // ⚠️ Optimization: if whole string exists in dictionary
+          if (dict.find(s) != dict.end()) {
               return true;
-          }    
-          for (int end = start + 1; end <= s.size(); end++) {
-              if (dict.count(s.substr(start, end - start)) &&
-                  wordBreakUtil(s, dict, end))
-                  return true;
           }
+  
+          // 🔁 Try all possible substrings starting from 'start'
+          for (int end = start + 1; end <= s.size(); end++) {
+  
+              // ✂️ Extract substring from 'start' to 'end'
+              string word = s.substr(start, end - start);
+  
+              // ✅ If substring exists in dictionary
+              // AND remaining string can also be segmented
+              if (dict.count(word) &&
+                  wordBreakUtil(s, dict, end)) {
+                  return true;
+              }
+          }
+  
+          // ❌ No valid segmentation found
           return false;
       }
+  
       bool wordBreak(string s, vector<string>& wordDict) {
+  
+          // 🔄 Convert vector to unordered_set for O(1) lookup
           unordered_set<string> dict(wordDict.begin(), wordDict.end());
-          // vector<int> dp(s.size(), -1);
+  
+          // 🚀 Start recursion from index 0
           return wordBreakUtil(s, dict, 0);
       }
   };

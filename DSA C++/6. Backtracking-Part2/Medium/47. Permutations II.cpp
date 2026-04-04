@@ -95,3 +95,47 @@ class Solution {
           return ans;
       }
   };
+
+  class Solution {
+    public:
+    
+        void get(string& s, int ind, vector<string> &result) {
+    
+            // ✅ Base case
+            if (ind == s.size()) {
+                result.push_back(s);
+                return;
+            }
+    
+            // 🔥 Set to avoid duplicate swaps at same level
+            unordered_set<char> used;
+    
+            for (int i = ind; i < s.size(); i++) {
+    
+                // ❌ Skip if already used at this level
+                if (used.count(s[i])) continue;
+                used.insert(s[i]);
+    
+                // 🔁 Swap
+                swap(s[ind], s[i]);
+    
+                // 🔁 Recurse
+                get(s, ind + 1, result);
+    
+                // 🔙 Backtrack
+                swap(s[ind], s[i]);
+            }
+        }
+    
+        vector<string> findPermutation(string &s) {
+    
+            vector<string> result;
+    
+            // 🔥 Optional but good for ordered output
+            sort(s.begin(), s.end());
+    
+            get(s, 0, result);
+    
+            return result;
+        }
+    };

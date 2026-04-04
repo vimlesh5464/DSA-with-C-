@@ -1,6 +1,8 @@
-// Given an array arr[] and an integer k, find the count of subsets whose sum is equals to k.
+// Given an array arr[] and an integer k, find the count of subsets whose 
+//sum is equals to k.
 
-// Note: It is guaranteed that the no of valid subsets will fit within a 32-bit integer.
+// Note: It is guaranteed that the no of valid subsets will fit within a 
+//32-bit integer.
 
 // Examples:
 

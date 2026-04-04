@@ -23,46 +23,53 @@
 using namespace std;
 class Solution {
   public:
-    bool helper(vector<int>& arr, int n, int sum) {
-        // Base cases
-        if (sum == 0) return true;
-        if (n == 0) return false;
-
-        // If current element is greater than sum, skip it
-        if (arr[n - 1] > sum)
-            return helper(arr, n - 1, sum);
-
-        // Include OR exclude the current element
-        return helper(arr, n - 1, sum) || 
-               helper(arr, n - 1, sum - arr[n - 1]);
-    }
-
-    bool isSubsetSum(vector<int>& arr, int sum) {
-        int n = arr.size();
-        return helper(arr, n, sum);
-    }
-};
-
-class Solution {
-  public:
-      bool helper(vector<int>& arr, int n, int sum, vector<vector<int>>& dp) {
-          if(sum == 0) return true;
-          if(n == 0) return false;
-          
-          if(dp[n][sum] != -1) return dp[n][sum]; // already computed
-          
-          if(arr[n-1] > sum)
-              return dp[n][sum] = helper(arr, n-1, sum, dp);
-          else
-              return dp[n][sum] = helper(arr, n-1, sum, dp) || helper(arr, n-1, sum - arr[n-1], dp);
+      bool helper(vector<int>& arr, int n, int sum) {
+          // Base cases
+          if (sum == 0) return true;
+          if (n == 0) return false;
+  
+          // If current element is less than or equal to sum
+          if (arr[n - 1] <= sum) {
+              return helper(arr, n - 1, sum) || 
+                     helper(arr, n - 1, sum - arr[n - 1]);
+          } else {
+              return helper(arr, n - 1, sum);
+          }
       }
-      
+  
       bool isSubsetSum(vector<int>& arr, int sum) {
           int n = arr.size();
-          vector<vector<int>> dp(n+1, vector<int>(sum+1, -1));
-          return helper(arr, n, sum, dp);
+          return helper(arr, n, sum);
       }
   };
+
+  class Solution {
+    public:
+        bool helper(vector<int>& arr, int n, int sum, vector<vector<int>>& dp) {
+            // Base cases
+            if (sum == 0) return true;
+            if (n == 0) return false;
+    
+            // If already computed
+            if (dp[n][sum] != -1) return dp[n][sum];
+    
+            if (arr[n - 1] <= sum) {
+                return dp[n][sum] = helper(arr, n - 1, sum, dp) || 
+                                    helper(arr, n - 1, sum - arr[n - 1], dp);
+            } else {
+                return dp[n][sum] = helper(arr, n - 1, sum, dp);
+            }
+        }
+    
+        bool isSubsetSum(vector<int>& arr, int sum) {
+            int n = arr.size();
+            
+            // dp[n+1][sum+1] initialized with -1
+            vector<vector<int>> dp(n + 1, vector<int>(sum + 1, -1));
+            
+            return helper(arr, n, sum, dp);
+        }
+    };
 
   class Solution {
     public:

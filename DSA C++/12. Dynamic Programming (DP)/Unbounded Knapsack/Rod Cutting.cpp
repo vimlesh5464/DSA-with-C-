@@ -8,7 +8,8 @@
 
 // Input: price[] = [1, 5, 8, 9, 10, 17, 17, 20]
 // Output: 22
-// Explanation: The maximum obtainable value is 22 by cutting in two pieces of lengths 2 and 6, i.e., 5 + 17 = 22.
+// Explanation: The maximum obtainable value is 22 by cutting in 
+//two pieces of lengths 2 and 6, i.e., 5 + 17 = 22.
 
 // Input: price[] = [3, 5, 8, 9, 10, 17, 17, 20]
 // Output: 24
