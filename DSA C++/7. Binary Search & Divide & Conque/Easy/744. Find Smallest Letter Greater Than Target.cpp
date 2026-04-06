@@ -1,40 +1,70 @@
+// You are given an array of characters letters that is sorted in non-decreasing order, and a character target. There are at least two different characters in letters.
+
+// Return the smallest character in letters that is lexicographically greater than target. If such a character does not exist, return the first character in letters.
+
+ 
+
+// Example 1:
+
+// Input: letters = ["c","f","j"], target = "a"
+// Output: "c"
+// Explanation: The smallest character that is lexicographically greater than 'a' in letters is 'c'.
+
+// Example 2:
+
+// Input: letters = ["c","f","j"], target = "c"
+// Output: "f"
+// Explanation: The smallest character that is lexicographically greater than 'c' in letters is 'f'.
+
+// Example 3:
+
+// Input: letters = ["x","x","y","y"], target = "z"
+// Output: "x"
+// Explanation: There are no characters in letters that is lexicographically greater than 'z' so we return letters[0].
+
+ 
+
+// Constraints:
+
+//     2 <= letters.length <= 104
+//     letters[i] is a lowercase English letter.
+//     letters is sorted in non-decreasing order.
+//     letters contains at least two different characters.
+//     target is a lowercase English letter.
+
 #include<iostream>
 #include<vector>
 #include<string>
 #include<algorithm> // Optional: For sort, but assume input is sorted
 
 using namespace std;
-
-// Corrected function to find the smallest letter strictly greater than the target.
-// The array is assumed to be sorted and wraps around.
-char greate(vector<char>& letters, char target){
-    int n = letters.size();
-    int l = 0;
-    int h = n - 1;
-
-    // Standard Binary Search to find the first element > target (or the insertion point)
-    while(l <= h){
-        int mid = l + (h - l) / 2;
-
-        if(letters[mid] > target){
-            // This could be the answer, but try to find an even smaller character
-            // that is still greater than the target, so search the left half.
-            h = mid - 1;
-        } else {
-            // letters[mid] <= target, so we must look in the right half
-            l = mid + 1;
-        }
-    }
-    
-    // After the loop, 'l' will point to the index of the smallest element 
-    // strictly greater than 'target'.
-    // If all elements are <= target, 'l' will be equal to n. 
-    // In this wrapping case, the answer is the first element (index 0).
-    // The modulo operator handles both cases correctly.
-    return letters[l % n]; 
-}
+class Solution {
+  public:
+      char nextGreatestLetter(vector<char>& letters, char target) {
+          for(char ch : letters) {
+              if(ch > target) {
+                  return ch;
+              }
+          }
+          // wrap around case
+          return letters[0];
+      }
+  };
+class Solution {
+  public:
+      char nextGreatestLetter(vector<char>& letters, char target) {
+          int low = 0, high = letters.size() - 1;
+      while (low <= high) {
+          int mid = low + (high - low)/2;
+          if (letters[mid] <= target) low = mid + 1;
+          else high = mid - 1;
+      }
+      return letters[low % letters.size()]; // wrap around
+      }
+  };
 
 int main(){
+  Solution s;
     char target;
     cout << "Enter the target character (e.g., 'k'): ";
     cin >> target;
@@ -54,7 +84,7 @@ int main(){
     
     // Call the function and print the result
     cout << "\nThe smallest letter greater than '" << target << "' is: ";
-    cout << greate(letters, target) << endl;
+    cout << s.nextGreatestLetter(letters, target) << endl;
     
     return 0;
 }

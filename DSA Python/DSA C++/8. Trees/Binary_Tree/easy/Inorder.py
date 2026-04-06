@@ -1,0 +1,41 @@
+# Inorder.py - Python skeleton converted from C++
+
+# Original C++ code:
+# #include<iostream>
+# using namespace std;
+# class Node{
+#   public:
+#   int data;
+#   Node* left;
+#   Node* right;
+# 
+#   Node(int data){
+#     this->data=data;
+#     left=right=NULL;
+#   }
+# };
+# 
+# void inorder(Node* root){
+#   if(root==NULL){
+#     return;
+#   }
+#   inorder(root->left);
+#   cout<<root->data<<endl;
+#   inorder(root->right);
+# }
+# int main(){
+#   Node* root = new Node(1);
+#     root->left = new Node(2);
+#     root->right = new Node(3);
+#     root->left->left = new Node(4);
+#     root->left->right = new Node(5);
+# 
+#     inorder(root);
+#     return 0;
+# }
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

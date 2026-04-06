@@ -1,4 +1,4 @@
-# Print All Subarrays.py - Python skeleton converted from C++
+# PrAll Subarrays.py - Python skeleton converted from C++
 
 def main():
     pass

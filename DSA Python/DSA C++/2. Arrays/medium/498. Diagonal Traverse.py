@@ -1,0 +1,66 @@
+# 498. Diagonal Traverse.py - Python skeleton converted from C++
+
+# Original C++ code:
+# // Given an m x n matrix mat, return an array of all the elements of the array in a diagonal order.
+# 
+#  
+# 
+# // Example 1:
+# 
+# // Input: mat = [[1,2,3],[4,5,6],[7,8,9]]
+# // Output: [1,2,4,7,5,3,6,8,9]
+# 
+# // Example 2:
+# 
+# // Input: mat = [[1,2],[3,4]]
+# // Output: [1,2,3,4]
+# 
+#  
+# 
+# // Constraints:
+# 
+# //     m == mat.length
+# //     n == mat[i].length
+# //     1 <= m, n <= 104
+# //     1 <= m * n <= 104
+# //     -105 <= mat[i][j] <= 105
+# 
+# #include <iostream>
+# #include <vector>
+# using namespace std;
+# 
+# 
+# class Solution {
+#   public:
+#       vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+#           int m = mat.size();
+#           int n = mat[0].size();
+#           vector<int> res(m * n);
+#   
+#           int row = 0, col = 0;
+#           for (int i = 0; i < m * n; i++) {
+#               res[i] = mat[row][col];
+#   
+#               // if the sum of indices is even -> moving up-right
+#               if ((row + col) % 2 == 0) {
+#                   if (col == n - 1) row++;        // last column → go down
+#                   else if (row == 0) col++;       // first row → go right
+#                   else { row--; col++; }          // otherwise up-right
+#               }
+#               // if the sum is odd -> moving down-left
+#               else {
+#                   if (row == m - 1) col++;        // last row → go right
+#                   else if (col == 0) row++;       // first col → go down
+#                   else { row++; col--; }          // otherwise down-left
+#               }
+#           }
+#           return res;
+#       }
+#   };
+#   
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

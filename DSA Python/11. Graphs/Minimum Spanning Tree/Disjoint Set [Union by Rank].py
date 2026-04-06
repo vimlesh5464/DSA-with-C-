@@ -1,4 +1,4 @@
-# Disjoint Set [Union by Rank].py - Python skeleton converted from C++
+# DisjoSet [Union by Rank].py - Python skeleton converted from C++
 
 def main():
     pass

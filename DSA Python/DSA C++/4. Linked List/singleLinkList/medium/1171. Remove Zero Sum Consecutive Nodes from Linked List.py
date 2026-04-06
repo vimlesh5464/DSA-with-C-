@@ -1,0 +1,117 @@
+# 1171. Remove Zero Sum Consecutive Nodes from Linked List.py - Python skeleton converted from C++
+
+# Original C++ code:
+# // Given the head of a linked list, we repeatedly delete consecutive sequences of nodes that sum to 0 until there are no such sequences.
+# 
+# // After doing so, return the head of the final linked list.  You may return any such answer.
+# 
+#  
+# 
+# // (Note that in the examples below, all sequences are serializations of ListNode objects.)
+# 
+# // Example 1:
+# 
+# // Input: head = [1,2,-3,3,1]
+# // Output: [3,1]
+# // Note: The answer [1,2,1] would also be accepted.
+# 
+# // Example 2:
+# 
+# // Input: head = [1,2,3,-3,4]
+# // Output: [1,2,4]
+# 
+# // Example 3:
+# 
+# // Input: head = [1,2,3,-3,-2]
+# // Output: [1]
+# 
+#  
+# 
+# // Constraints:
+# 
+# //     The given linked list will contain between 1 and 1000 nodes.
+# //     Each node in the linked list has -1000 <= node.val <= 1000.
+# 
+# #include <iostream>
+# #include<vector>
+# #include<stack>
+# using namespace std;
+# 
+# // Definition for singly-linked list.
+# struct ListNode {
+#     int val;
+#     ListNode *next;
+#     ListNode() : val(0), next(nullptr) {}
+#     ListNode(int x) : val(x), next(nullptr) {}
+#     ListNode(int x, ListNode *next) : val(x), next(next) {}
+# };
+# class Solution {
+#   public:
+#       ListNode* removeZeroSumSublists(ListNode* head) {
+#           vector<int> arr;
+#           ListNode* temp = head;
+#           while (temp) {
+#               arr.push_back(temp->val);
+#               temp = temp->next;
+#           }
+#   
+#           // Remove zero-sum subarrays
+#           for (int i = 0; i < arr.size(); i++) {
+#               int sum = 0;
+#               for (int j = i; j < arr.size(); j++) {
+#                   sum += arr[j];
+#                   if (sum == 0) {
+#                       arr.erase(arr.begin() + i, arr.begin() + j + 1);
+#                       i = -1; // Restart after modification
+#                       break;
+#                   }
+#               }
+#           }
+#   
+#           // Rebuild linked list
+#           ListNode* dummy = new ListNode(0);
+#           ListNode* cur = dummy;
+#           for (int val : arr) {
+#               cur->next = new ListNode(val);
+#               cur = cur->next;
+#           }
+#           return dummy->next;
+#       }
+#   };
+# 
+#   class Solution {
+#     public:
+#         ListNode* removal(ListNode* head, bool& flag) {
+#             if (head == NULL) {
+#                 return NULL;
+#             }
+#             ListNode* temp = head;
+#             int sum = 0;
+#             while (temp != NULL) {
+#                 sum += temp->val;
+#                 if (sum == 0) {
+#                     flag = true;
+#                     return temp->next;
+#                 }
+#                 temp = temp->next;
+#             }
+#             head->next = removal(head->next, flag);
+#             return head;
+#         }
+#             ListNode* removeZeroSumSublists(ListNode * head) {
+#                 while (1) {
+#                     bool flag = false;
+#                     head = removal(head, flag);
+#                     if (flag == false) {
+#                         break;
+#                     }
+#                 }
+#                 return head;
+#             }
+#         };
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

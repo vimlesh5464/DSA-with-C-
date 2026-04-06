@@ -1,0 +1,31 @@
+# 69.  Sqrt(x).py - Python skeleton converted from C++
+
+# Original C++ code:
+# #include<iostream>
+# using namespace std;
+# int sqrt(int x){
+#   long long l = 0, h = x, ans = 0;
+#   while(l<=h){
+#     long long mid = l + (h-l)/2;
+#     if(mid*mid<=x){
+#       ans = mid;
+#       l = mid +1;
+#     }else{
+#       h = mid-1;
+#     }
+#   }
+#   return ans;
+# }
+# 
+# int main(){
+#   int x;
+#   cin>> x;
+#   cout<< sqrt(5);
+#   return 0;
+# }
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

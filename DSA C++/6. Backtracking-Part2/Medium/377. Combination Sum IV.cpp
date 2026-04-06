@@ -37,32 +37,68 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-int combi(vector<int>& nums,int i,vector<int>&subset,vector<vector<int>>&ans,int target){
-  
-  if(i==nums.size()){
-    if(target==0){
-      ans.push_back(subset);
-      return 1;
-    }
-    
+int combi(vector<int>& nums, int target){
+  if(target == 0) return 1;
+  if(target < 0) return 0;
+
+  int count = 0;
+
+  for(int i = 0; i < nums.size(); i++){
+      count += combi(nums, target - nums[i]);
   }
-if(i==nums.size() || target<0){
-  return 0;
+
+  return count;
 }
+class Solution {
+  public:
+      int solve(vector<int>& nums, int target, vector<int>& dp) {
+          if(target == 0) return 1;
+          if(target < 0) return 0;
+  
+          // Memoization check
+          if(dp[target] != -1) return dp[target];
+  
+          int count = 0;
+  
+          for(int i = 0; i < nums.size(); i++){
+              count += solve(nums, target - nums[i], dp);
+          }
+  
+          return dp[target] = count;
+      }
+  
+      int combinationSum4(vector<int>& nums, int target) {
+          vector<int> dp(target + 1, -1);
+          return solve(nums, target, dp);
+      }
+  };
 
-subset.push_back(nums[i]);
-int include = combi(nums,i,subset,ans,target-nums[i]);
-subset.pop_back();
 
-int exclude=combi(nums,i+1,subset,ans,target);
-return include+exclude;
+  
+void combi(vector<int>& nums, int target, vector<int>& path) {
+  // Base case
+  if(target == 0) {
+      // print one valid combination
+      for(int x : path) cout << x << " ";
+      cout << endl;
+      return;
+  }
+
+  if(target < 0) return;
+
+  // Try all numbers (order matters)
+  for(int i = 0; i < nums.size(); i++) {
+      path.push_back(nums[i]);              // choose
+      combi(nums, target - nums[i], path); // explore
+      path.pop_back();                      // backtrack
+  }
 }
 int main(){
   vector<int> subset;
   int target = 2;
   vector<int> nums={1,2,3};
   vector<vector<int>> ans;
-  int count = combi(nums,0,subset,ans,target);
+  int count = combi(nums,target);
   cout<< "count: "<<count<<endl;
   for(int i = 0; i < ans.size(); i++){
     for(int j = 0; j < ans[i].size(); j++){

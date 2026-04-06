@@ -28,12 +28,18 @@
 using namespace std;
 class Solution {
   public:
-      void reverseString(vector<char>& s) {
-          int left = 0, right = s.size() - 1;
-      while (left < right) {
+      void helper(vector<char>& s, int left, int right) {
+          // Base case: when pointers cross, stop recursion
+          if (left >= right) return;
+  
+          // Swap characters
           swap(s[left], s[right]);
-          left++;
-          right--;
+  
+          // Recursive call for next positions
+          helper(s, left + 1, right - 1);
       }
+  
+      void reverseString(vector<char>& s) {
+          helper(s, 0, s.size() - 1);
       }
   };

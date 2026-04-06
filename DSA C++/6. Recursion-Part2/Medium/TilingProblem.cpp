@@ -1,18 +1,45 @@
 #include<iostream>
 using namespace std;
-//Tiling Problem 3*n 
 int tilingProblem(int n){
-  if(n==1 || n==0 || n==2){
-    return 1;
-  }
-  //vertical choice
-  int a = tilingProblem(n-1);
-  //horizontal
-  int b = tilingProblem(n-3);
-  return a+b;
+  if(n == 0) return 1;
+  if(n < 0) return 0;
+
+  // vertical placement
+  int a = tilingProblem(n - 1);
+
+  // horizontal placement (3 tiles)
+  int b = tilingProblem(n - 3);
+
+  return a + b;
+}
+int solve(int n, vector<int> &dp) {
+  if(n == 0) return 1;
+  if(n < 0) return 0;
+
+  if(dp[n] != -1) return dp[n];
+
+  return dp[n] = solve(n-1, dp) + solve(n-3, dp);
+}
+
+int tilingProblem(int n){
+  vector<int> dp(n+1, -1);
+  return solve(n, dp);
 }
 
 //2*n
+int solve(int n, vector<int> &dp){
+  if(n == 0 || n == 1) return 1;
+
+  if(dp[n] != -1) return dp[n];
+
+  return dp[n] = solve(n-1, dp) + solve(n-2, dp);
+}
+
+int tilingProblem(int n){
+  vector<int> dp(n+1, -1);
+  return solve(n, dp);
+}
+
     // int numberOfWays(int n) {
     //     // code here
     //     if(n==0|n==1){

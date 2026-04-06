@@ -1,4 +1,8 @@
-// There are n people standing in a circle, numbered from 1 to n. Starting from person 1, counting proceeds in clockwise direction. In each step, exactly k-1 people are skipped, and the k-th person is eliminated from the circle. The counting then resumes from the next person, and the process continues until only one person remains.
+// There are n people standing in a circle, numbered from 1 to n. 
+//Starting from person 1, counting proceeds in clockwise direction. 
+//In each step, exactly k-1 people are skipped, and the k-th person is
+// eliminated from the circle. The counting then resumes from the next 
+//person, and the process continues until only one person remains.
 
 // Determine the position of the last surviving person in the original circle.
 

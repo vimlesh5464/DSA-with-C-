@@ -1,0 +1,73 @@
+# 59. Spiral Matrix II.py - Python skeleton converted from C++
+
+# Original C++ code:
+# // Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+# 
+#  
+# 
+# // Example 1:
+# 
+# // Input: n = 3
+# // Output: [[1,2,3],[8,9,4],[7,6,5]]
+# 
+# // Example 2:
+# 
+# // Input: n = 1
+# // Output: [[1]]
+# 
+#  
+# 
+# // Constraints:
+# 
+# //     1 <= n <= 20
+# 
+#  
+# #include <iostream>
+# #include<vector>
+# using namespace std;
+# class Solution {
+#   public:
+#       vector<vector<int>> generateMatrix(int n) {
+#           vector<vector<int>> matrix(n, vector<int>(n, 0)); // initialize n x n with 0
+#   
+#           int srow = 0, erow = n - 1;   // starting & ending row
+#           int scol = 0, ecol = n - 1;   // starting & ending column
+#           int num = 1;                  // number to fill (1 to n*n)
+#   
+#           while (srow <= erow && scol <= ecol) {
+#               // Traverse Top Row (→)
+#               for (int j = scol; j <= ecol; j++)
+#                   matrix[srow][j] = num++;
+#   
+#               // Traverse Right Column (↓)
+#               for (int i = srow + 1; i <= erow; i++)
+#                   matrix[i][ecol] = num++;
+#   
+#               // Traverse Bottom Row (←)
+#               if (srow < erow) {
+#                   for (int j = ecol - 1; j >= scol; j--)
+#                       matrix[erow][j] = num++;
+#               }
+#   
+#               // Traverse Left Column (↑)
+#               if (scol < ecol) {
+#                   for (int i = erow - 1; i > srow; i--)
+#                       matrix[i][scol] = num++;
+#               }
+#   
+#               // Move inward for next layer
+#               srow++;
+#               erow--;
+#               scol++;
+#               ecol--;
+#           }
+#   
+#           return matrix;
+#       }
+#   };
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

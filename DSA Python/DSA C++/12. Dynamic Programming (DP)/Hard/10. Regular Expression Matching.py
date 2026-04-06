@@ -1,0 +1,78 @@
+# 10. Regular Expression Matching.py - Python skeleton converted from C++
+
+# Original C++ code:
+# // Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
+# 
+# //     '.' Matches any single character.​​​​
+# //     '*' Matches zero or more of the preceding element.
+# 
+# // Return a boolean indicating whether the matching covers the entire input string (not partial).
+# 
+#  
+# 
+# // Example 1:
+# 
+# // Input: s = "aa", p = "a"
+# // Output: false
+# // Explanation: "a" does not match the entire string "aa".
+# 
+# // Example 2:
+# 
+# // Input: s = "aa", p = "a*"
+# // Output: true
+# // Explanation: '*' means zero or more of the preceding element, 'a'. Therefore, by repeating 'a' once, it becomes "aa".
+# 
+# // Example 3:
+# 
+# // Input: s = "ab", p = ".*"
+# // Output: true
+# // Explanation: ".*" means "zero or more (*) of any character (.)".
+# 
+#  
+# 
+# // Constraints:
+# 
+# //     1 <= s.length <= 20
+# //     1 <= p.length <= 20
+# //     s contains only lowercase English letters.
+# //     p contains only lowercase English letters, '.', and '*'.
+# //     It is guaranteed for each appearance of the character '*', there will be a previous valid character to match.
+# #include<iostream>
+# #include<string>
+# using namespace std;
+# class Solution {
+#   public:
+#       bool isMatch(string s, string p) {
+#           return match(s, p, 0, 0);
+#       }
+#   
+#       bool match(string &s, string &p, int i, int j) {
+#           // If pattern is finished
+#           if (j == p.length()) {
+#               return i == s.length();
+#           }
+#   
+#           // Check first character match
+#           bool firstMatch = (i < s.length() &&
+#                             (s[i] == p[j] || p[j] == '.'));
+#   
+#           // If next character is '*'
+#           if (j + 1 < p.length() && p[j + 1] == '*') {
+#               // 1) Skip x*
+#               // 2) Use x* if firstMatch
+#               return match(s, p, i, j + 2) ||
+#                      (firstMatch && match(s, p, i + 1, j));
+#           }
+#           else {
+#               // Normal match
+#               return firstMatch && match(s, p, i + 1, j + 1);
+#           }
+#       }
+#   };
+#   
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()

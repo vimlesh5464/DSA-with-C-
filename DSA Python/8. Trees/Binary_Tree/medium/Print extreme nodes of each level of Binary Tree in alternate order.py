@@ -1,4 +1,4 @@
-# Print extreme nodes of each level of Binary Tree in alternate order.py - Python skeleton converted from C++
+# Prextreme nodes of each level of Binary Tree in alternate order.py - Python skeleton converted from C++
 
 def main():
     pass

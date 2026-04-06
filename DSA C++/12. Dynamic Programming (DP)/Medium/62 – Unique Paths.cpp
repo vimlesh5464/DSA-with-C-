@@ -26,3 +26,52 @@
 // Constraints:
 
 //     1 <= m, n <= 100
+
+#include <iostream>
+#include<vector>
+using namespace std;
+
+class Solution {
+  public:
+      int gridWays(int i, int j, int m, int n, vector<vector<int>>& vis) {
+          // Out of bounds
+          if(i >= m || j >= n) return 0;
+  
+          // Reached destination
+          if(i == m - 1 && j == n - 1) return 1;
+  
+          // Memoization check
+          if(vis[i][j] != -1) {
+              return vis[i][j];
+          }
+  
+          // Move Down + Right
+          return vis[i][j] = gridWays(i + 1, j, m, n, vis) +
+                            gridWays(i, j + 1, m, n, vis);
+      }
+  
+      int uniquePaths(int m, int n) {
+          vector<vector<int>> vis(m, vector<int>(n, -1));
+          return gridWays(0, 0, m, n, vis);  // FIXED
+      }
+  };
+
+  class Solution {
+    public:
+        int uniquePaths(int m, int n) {
+            vector<vector<int>> dp(m, vector<int>(n, 0));
+    
+            // Base case: first row and first column
+            for(int i = 0; i < m; i++) dp[i][0] = 1;
+            for(int j = 0; j < n; j++) dp[0][j] = 1;
+    
+            // Fill the DP table
+            for(int i = 1; i < m; i++) {
+                for(int j = 1; j < n; j++) {
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }
+            }
+    
+            return dp[m-1][n-1];
+        }
+    };

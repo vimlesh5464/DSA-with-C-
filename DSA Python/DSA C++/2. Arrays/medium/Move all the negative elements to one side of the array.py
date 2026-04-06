@@ -1,0 +1,82 @@
+# Move all the negative elements to one side of the array.py - Python skeleton converted from C++
+
+# Original C++ code:
+# // Given an array containing both positive and negative numbers in random order.
+# // The task is to rearrange the array elements so that all negative numbers appear
+# // before all positive numbers.
+# 
+# // Note:
+# 
+# //     Given array does not contain any zeroes.
+# //     Order of resultant array does not matter.
+# 
+# // Example : 
+# 
+# //     Input: -12, 11, -13, -5, 6, -7, 5, -3, -6
+# //     Output: -12 -13 -5 -7 -3 -6 11 6 5
+# #include <iostream>
+# #include<vector>
+# using namespace std;
+# 
+# //[Expected Approach - 1] Using Quick Sort Partition - O(n) time and O(1) space
+# vector<int> move(vector<int> &arr) {
+#     int j = 0;
+#     for (int i=0; i<arr.size(); i++) {
+#         
+#         // If negative number is present
+#         // swap it with arr[j]
+#         if (arr[i]<0) {
+#             swap(arr[i], arr[j]);
+#             j++;
+#         }
+#     }
+#     
+#     return arr;
+# }
+# 
+# //[Expected Approach - 2] Using Two Pointer Method - O(n) time and O(1) space
+# vector<int> move(vector<int> &arr) {
+#   int left = 0, right = arr.size()-1;
+#   while (left<right) {
+#       
+#       // increment left while arr[left]
+#       // is negative
+#       while (left<right && arr[left]<0) {
+#           left++;
+#       }
+#       
+#       // decrement right while arr[right]
+#       // is positive
+#       while (right>left && arr[right]>0) {
+#           right--;
+#       }
+#       
+#       // swap the two values.
+#       if (right>left) {
+#           swap(arr[left], arr[right]);
+#           left++;
+#           right--;
+#       }
+#   }
+#   
+#   return arr;
+# }
+# 
+# 
+# int main() {
+#     vector<int> arr = {-12, 11, -13, -5, 6, -7, 5, -3, -6};
+#     vector<int> ans = move(arr);
+#     
+#     for (auto num: ans) {
+#         cout << num << " ";
+#     }
+#     cout<<endl;
+# 
+#     return 0;
+# }
+
+def main():
+    pass  # TODO: Convert C++ code to Python here
+
+if __name__ == '__main__':
+    main()
