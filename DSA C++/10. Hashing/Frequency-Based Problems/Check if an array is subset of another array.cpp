@@ -44,22 +44,7 @@ bool isSubset(vector<int> &a, vector<int> &b)
     return true;
 }
 
-int main()
-{
-    vector<int> a = {11, 1, 13, 21, 3, 7};
-    vector<int> b = {11, 3, 7, 1};
 
-    if (isSubset(a, b))
-    {
-        cout << "true" << endl;
-    }
-    else
-    {
-        cout << "false" << endl;
-    }
-
-    return 0;
-}
 #include <iostream>
 using namespace std;
 
@@ -90,15 +75,7 @@ bool isSubset(vector<int>& a, vector<int>& b) {
     return (j == n); 
 }
 
-int main() {
-    vector<int> a = {11, 1, 13, 21, 3, 7};
-    vector<int> b = {11, 3, 7, 1};
 
-    if (isSubset(a, b)) cout << "true\n";
-    else cout << "false\n";
-
-    return 0;
-}
 
 //[Expected Approach] Using Hashing - O(m + n) Time and O(m) Space
 #include<unordered_set>

@@ -134,3 +134,92 @@ int main()
     nextSmallerOfNextGreater(arr, n);
     return 0;
 }
+
+vector<int> nextGreater(vector<int>& arr) {
+    int n = arr.size();
+    vector<int> nge(n, -1);
+    stack<int> st; // stores indices
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        while (!st.empty() && arr[st.top()] <= arr[i]) {
+            st.pop();
+        }
+
+        if (!st.empty()) {
+            nge[i] = st.top();
+        }
+
+        st.push(i);
+    }
+
+    return nge;
+}
+
+vector<int> nextSmaller(vector<int>& arr) {
+    int n = arr.size();
+    vector<int> nse(n, -1);
+    stack<int> st;
+
+    for (int i = n - 1; i >= 0; i--) {
+
+        while (!st.empty() && arr[st.top()] >= arr[i]) {
+            st.pop();
+        }
+
+        if (!st.empty()) {
+            nse[i] = st.top();
+        }
+
+        st.push(i);
+    }
+
+    return nse;
+}
+
+vector<int> solve(vector<int>& arr) {
+    int n = arr.size();
+
+    vector<int> ngeIndex = nextGreater(arr);
+    vector<int> nseIndex = nextSmaller(arr);
+
+    vector<int> ans(n, -1);
+
+    for (int i = 0; i < n; i++) {
+
+        int ngeIdx = ngeIndex[i];
+
+        // If no next greater
+        if (ngeIdx == -1) {
+            ans[i] = -1;
+        }
+        else {
+            int nseIdx = nseIndex[ngeIdx];
+
+            // If no next smaller of NGE
+            if (nseIdx == -1) ans[i] = -1;
+            else ans[i] = arr[nseIdx];
+        }
+    }
+
+    return ans;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    vector<int> res = solve(arr);
+
+    for (int x : res) {
+        cout << x << " ";
+    }
+
+    return 0;
+}

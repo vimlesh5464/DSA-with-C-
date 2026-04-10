@@ -34,3 +34,55 @@
 
 //     0 <= key, value <= 106
 //     At most 104 calls will be made to put, get, and remove.
+#include <vector>
+#include <list>
+using namespace std;
+
+class MyHashMap {
+private:
+    int size;
+    vector<list<pair<int, int>>> table;
+
+public:
+    MyHashMap() {
+        size = 1000;
+        table.resize(size);
+    }
+
+    int hash(int key) {
+        return key % size;
+    }
+
+    void put(int key, int value) {
+        int index = hash(key);
+
+        for (auto &p : table[index]) {
+            if (p.first == key) {
+                p.second = value; // update
+                return;
+            }
+        }
+
+        table[index].push_back({key, value});
+    }
+
+    int get(int key) {
+        int index = hash(key);
+
+        for (auto &p : table[index]) {
+            if (p.first == key) {
+                return p.second;
+            }
+        }
+
+        return -1;
+    }
+
+    void remove(int key) {
+        int index = hash(key);
+
+        table[index].remove_if([key](pair<int,int> p) {
+            return p.first == key;
+        });
+    }
+};

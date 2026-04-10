@@ -1,4 +1,5 @@
-// Given an array arr[] of non-negative integers which may contain duplicate elements. Return the frequency of each distinct element present in the array.
+// Given an array arr[] of non-negative integers which may contain duplicate elements.
+// Return the frequency of each distinct element present in the array.
 
 // Examples: 
 
@@ -9,7 +10,9 @@
 //     Input: arr[] = [10, 20, 20]
 //     Output: [[10, 1], [20, 2]] 
 //     Explanation: Here 10 occurs 1 time, 20 occurs 2 times.
+
 #include <iostream>
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 using namespace std;
@@ -40,19 +43,6 @@ vector<vector<int>> countFreq(vector<int>& arr){
     return ans;
 }
 
-int main(){
-    vector <int> arr = {10, 20, 10, 5, 20};
-    vector<vector<int>>ans =  countFreq(arr);
-    sort(ans.begin(), ans.end()) ;
-    for (auto x : ans){
-        cout << x[0] << ' '<< x[1] <<'\n';
-    }
-    return 0 ;
-}
-#include <algorithm>
-#include <iostream>
-#include <vector>
-using namespace std;
 
 vector<vector<int>> countFreq(vector<int> &arr){
     int n = arr.size();
@@ -79,19 +69,6 @@ vector<vector<int>> countFreq(vector<int> &arr){
     return ans;
 }
 
-int main(){
-    vector<int> arr = {10 ,20 ,10 ,5 , 20};
-    vector<vector<int>> ans = countFreq(arr);
-    for (auto x : ans){
-        cout << x[0] << " " << x[1] << endl;
-    }
-    return 0;
-}
-#include <iostream>
-#include <unordered_map>
-#include <vector>
-#include <algorithm>
-using namespace std;
 
 vector<vector<int>> countFreq(vector<int>& arr) {
     

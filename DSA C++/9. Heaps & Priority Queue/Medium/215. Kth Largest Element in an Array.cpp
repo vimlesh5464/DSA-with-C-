@@ -8,6 +8,28 @@ class Solution {
       int findKthLargest(vector<int>& nums, int k) {
            int n = nums.size();
   
+      priority_queue<int> maxHeap; // max heap
+  
+          // push all elements
+          for (int num : nums) {
+              maxHeap.push(num);
+          }
+  
+          // remove k-1 largest elements
+          for (int i = 0; i < k - 1; i++) {
+              maxHeap.pop();
+          }
+  
+          // kth largest
+          return maxHeap.top();
+      }
+  };
+  
+class Solution {
+  public:
+      int findKthLargest(vector<int>& nums, int k) {
+           int n = nums.size();
+  
       // Create a min heap (priority queue)
       priority_queue<int, vector<int>, greater<int>> pq;
   

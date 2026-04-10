@@ -30,38 +30,72 @@ using namespace std;
 class Solution {
   public:
       string decodeString(string s) {
-          //CodeGenius
-          stack<char>st;
-          for(int i=0;i<s.size();i++){
-              if(s[i]!=']') st.push(s[i]);
-              else{
+          // Stack to store characters of string
+          stack<char> st;
+  
+          // Traverse the entire string
+          for (int i = 0; i < s.size(); i++) {
+  
+              // If current char is not ']', push into stack
+              if (s[i] != ']') {
+                  st.push(s[i]);
+              }
+              else {
+                  // When we find ']', we start decoding
+  
                   string word;
-                  while(!st.empty() && st.top()!='['){
+  
+                  // Step 1: Extract the encoded string inside [ ]
+                  while (!st.empty() && st.top() != '[') {
                       word.push_back(st.top());
                       st.pop();
                   }
-                  reverse(word.begin(),word.end());//ishan
+  
+                  // Reverse because stack gives reverse order
+                  reverse(word.begin(), word.end());
+  
+                  // Remove '[' from stack
                   st.pop();
+  
+                  // Step 2: Extract the number (k) before '['
                   string k;
-                  while(!st.empty() && isdigit(st.top())){
+  
+                  while (!st.empty() && isdigit(st.top())) {
                       k.push_back(st.top());
                       st.pop();
                   }
-                  reverse(k.begin(),k.end());
-                  int num=stoi(k);//3
+  
+                  // Reverse to get correct number order
+                  reverse(k.begin(), k.end());
+  
+                  // Convert string to integer
+                  int num = stoi(k);
+  
+                  // Step 3: Repeat decoded string num times
                   string repeated;
-                  for(int j=0;j<num;j++){
-                      repeated.append(word);//ishanishanishan
+  
+                  for (int j = 0; j < num; j++) {
+                      repeated.append(word);
                   }
-                  for(char c: repeated) st.push(c);
+  
+                  // Push repeated string back into stack
+                  for (char c : repeated) {
+                      st.push(c);
+                  }
               }
           }
+  
+          // Step 4: Build final answer from stack
           string ans;
-          while(!st.empty()){
+  
+          while (!st.empty()) {
               ans.push_back(st.top());
               st.pop();
           }
-          reverse(ans.begin(),ans.end());
+  
+          // Reverse because stack gives reverse order
+          reverse(ans.begin(), ans.end());
+  
           return ans;
       }
   };

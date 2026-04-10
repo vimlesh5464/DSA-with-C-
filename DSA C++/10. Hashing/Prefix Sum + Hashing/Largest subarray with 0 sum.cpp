@@ -19,3 +19,50 @@
 // Constraints:
 // 1 ≤ arr.size() ≤ 106
 // −103 ≤ arr[i] ≤ 103
+#include<unordered_map>
+#include <iostream>
+using namespace std;
+
+int maxLen(vector<int>& arr) {
+  int n = arr.size();
+  int maxLen = 0;
+
+  for (int i = 0; i < n; i++) {
+      int sum = 0;
+
+      for (int j = i; j < n; j++) {
+          sum += arr[j];
+
+          if (sum == 0) {
+              maxLen = max(maxLen, j - i + 1);
+          }
+      }
+  }
+
+  return maxLen;
+}
+
+int maxLen(vector<int>& arr) {
+  unordered_map<int, int> mp; // sum -> index
+  int sum = 0;
+  int maxLen = 0;
+
+  for (int i = 0; i < arr.size(); i++) {
+      sum += arr[i];
+
+      // Case 1: sum == 0
+      if (sum == 0) {
+          maxLen = i + 1;
+      }
+
+      // Case 2: sum seen before
+      if (mp.find(sum) != mp.end()) {
+          maxLen = max(maxLen, i - mp[sum]);
+      } else {
+          // store first occurrence
+          mp[sum] = i;
+      }
+  }
+
+  return maxLen;
+}

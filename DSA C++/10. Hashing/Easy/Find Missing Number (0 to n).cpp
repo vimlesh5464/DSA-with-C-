@@ -12,7 +12,24 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+int missingNumber(vector<int>& arr) {
+  int n = arr.size() + 1;
 
+  for (int i = 1; i <= n; i++) {
+      bool found = false;
+
+      for (int j = 0; j < arr.size(); j++) {
+          if (arr[j] == i) {
+              found = true;
+              break;
+          }
+      }
+
+      if (!found) return i;
+  }
+
+  return -1;
+}
 int missingNum(vector<int> &arr) {
 
     int n = arr.size() + 1;

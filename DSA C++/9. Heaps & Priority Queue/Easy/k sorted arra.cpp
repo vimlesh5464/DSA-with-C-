@@ -1,3 +1,23 @@
+// Given an array of n distinct elements. Check whether the given array is a k-sorted 
+//array or not. A k-sorted array is an array where each element is at most k distance
+// away from its target position in the sorted array. 
+// Return "Yes" if the array is a k-sorted array else return "No".
+
+// Examples
+
+// Input: n=6, arr[] = {3, 2, 1, 5, 6, 4}, k = 2
+// Output: Yes
+// Explanation: Every element is at most 2 distance away from its target position in thesorted array.  
+
+// Input: n=7, arr[] = {13, 8, 10, 7, 15, 14, 12}, k = 1
+// Output: No
+
+// Expected Time Complexity: O(nlogn).
+// Expected Auxiliary Space: O(n).
+
+// Constraints:
+// 1 ≤ n ≤ 105
+// 0 ≤ k ≤ n
 #include<iostream>
 #include<vector>
 #include<queue>
@@ -9,65 +29,62 @@ using namespace std;
 class Solution {
   public:
     string isKSortedArray(int arr[], int n, int k) {
-        vector<pair<int,int>> vp;
-
-        // Step 1: store value and original index
-        for(int i = 0; i < n; i++){
-            vp.push_back({arr[i], i});
-        }
-
-        // Step 2: sort by value
-        sort(vp.begin(), vp.end());
-
-        // Step 3: check displacement
-        for(int i = 0; i < n; i++){
-            int originalIndex = vp[i].second;
-            int sortedIndex = i;
-            if(abs(originalIndex - sortedIndex) > k)
-                return "No";  // Not k-sorted
-        }
-
-        return "Yes"; // k-sorted
+      vector<int> temp(arr, arr + n);
+      sort(temp.begin(), temp.end());
+      
+      // store value -> index
+      unordered_map<int, int> mp;
+      for (int i = 0; i < n; i++) {
+          mp[temp[i]] = i;
+      }
+      
+      for (int i = 0; i < n; i++) {
+          if (abs(i - mp[arr[i]]) > k)
+              return "No";
+      }
+      
+      return "Yes";
     }
 };
 class Solution {
-public:
-    string isKSortedArray(int arr[], int n, int k) {
-        vector<int> sortedArr; // simulate sorted array using heap
+  public:
+      string isKSortedArray(int arr[], int n, int k) {
+          
+          // Step 1: Build sorted array using min-heap of size k+1
+          priority_queue<int, vector<int>, greater<int>> pq;
+          vector<int> sortedArr;
+  
+          for(int i = 0; i <= min(k, n-1); i++) {
+              pq.push(arr[i]);
+          }
+  
+          for(int i = k+1; i < n; i++) {
+              sortedArr.push_back(pq.top());
+              pq.pop();
+              pq.push(arr[i]);
+          }
+  
+          while(!pq.empty()) {
+              sortedArr.push_back(pq.top());
+              pq.pop();
+          }
+  
+          // Step 2: Map value -> sorted index
+          unordered_map<int, int> mp;
+          for(int i = 0; i < n; i++) {
+              mp[sortedArr[i]] = i;
+          }
+  
+          // Step 3: Distance check
+          for(int i = 0; i < n; i++) {
+              if(abs(i - mp[arr[i]]) > k)
+                  return "No";
+          }
+  
+          return "Yes";
+      }
+  };
 
-        priority_queue<int, vector<int>, greater<int>> pq;
-
-        // Step 1: push first k+1 elements
-        for(int i = 0; i <= min(k, n-1); i++)
-            pq.push(arr[i]);
-
-        int index = 0;
-
-        // Step 2: iterate remaining elements
-        for(int i = k+1; i < n; i++) {
-            // top of min-heap must go next
-            sortedArr.push_back(pq.top());
-            pq.pop();
-
-            pq.push(arr[i]);
-        }
-
-        // Step 3: pop remaining elements from heap
-        while(!pq.empty()) {
-            sortedArr.push_back(pq.top());
-            pq.pop();
-        }
-
-        // Step 4: check if sortedArr matches fully sorted version
-        vector<int> check(arr, arr+n);
-        sort(check.begin(), check.end());
-
-        if(sortedArr == check)
-            return "Yes";
-        else
-            return "No";
-    }
-};
 int main() {
   int arr[] = {3, 2, 1, 5, 6, 4};
   int n = sizeof(arr)/sizeof(arr[0]);
