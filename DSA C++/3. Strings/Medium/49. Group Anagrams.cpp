@@ -1,4 +1,5 @@
-// Given an array of strings strs, group the together. You can return the answer in any order.
+// Given an array of strings strs, group the together. You can return the answer in 
+//any order.
 
  
 
@@ -46,6 +47,10 @@ using namespace std;
 // | **Time Complexity**  | **O(n · k)** |
 // | **Space Complexity** | **O(n · k)** |
 
+
+// I used a hashmap where the key is the character frequency representation of each string.
+//  Since anagrams have identical frequency counts, they map to the same key. This allows
+//   grouping all anagrams efficiently in O(n × k) time.
 class Solution {
   public:
       vector<vector<string>> groupAnagrams(vector<string>& strs) {

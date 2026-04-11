@@ -1,12 +1,18 @@
-// A car company has projected its daily profit and loss for the next N days. Each day's financial outcome is represented as an integer:
+// A car company has projected its daily profit and loss for the next N days. 
+//Each day's financial outcome is represented as an integer:
 
 // A positive value indicates a profit.
 // A negative value indicates a loss.
-// Your task is to determine whether the sequence of profits and losses can be rearranged such that, at no point during the N days, does the cumulative sum become zero. The rearranged sequence must be in either non-decreasing or non-increasing order.
+// Your task is to determine whether the sequence of profits and losses can be rearranged 
+//such that, at no point during the N days, does the cumulative sum become zero. The 
+//rearranged sequence must be in either non-decreasing or non-increasing order.
 
-// Additionally, simply sorting the numbers is not enough—the chosen order must ensure that no prefix sum of the sequence is ever zero. If one order fails, try the other order. If neither order is valid, print "IMPOSSIBLE".
+// Additionally, simply sorting the numbers is not enough—the chosen order must ensure 
+//that no prefix sum of the sequence is ever zero. If one order fails, try the other order. 
+//If neither order is valid, print "IMPOSSIBLE".
 
-// If both orders satisfy the condition, print the order that starts with the larger first element to ensure a deterministic output.
+// If both orders satisfy the condition, print the order that starts with the larger 
+//first element to ensure a deterministic output.
 
 // Input Format
 
@@ -16,7 +22,8 @@
 
 // Output Format
 
-// Print “POSSIBLE” followed by the rearranged sequence if it is possible to meet the condition. Otherwise, print “IMPOSSIBLE.”
+// Print “POSSIBLE” followed by the rearranged sequence if it is possible to meet the 
+//condition. Otherwise, print “IMPOSSIBLE.”
 
 // Constraints
 

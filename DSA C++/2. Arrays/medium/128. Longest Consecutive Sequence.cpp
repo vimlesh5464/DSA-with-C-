@@ -29,6 +29,7 @@
 //     0 <= nums.length <= 105
 //     -109 <= nums[i] <= 109
 #include<iostream>
+#include <unordered_set>
 #include<vector>
 using namespace std;
 class Solution {
@@ -51,10 +52,14 @@ class Solution {
           return max_count;
       }
   };
-  #include <vector>
-#include <unordered_set>
-using namespace std;
 
+  //I used a hash set for O(1) lookup. For each number, I check if it is the start of 
+  //a sequence by verifying that num-1 is not present. If it is a start, I count 
+  //consecutive numbers using a loop. This avoids redundant work and ensures O(n) 
+  //time complexity."
+
+  // Time Complexity:O(n)
+  // Space Complexity:O(n)
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {

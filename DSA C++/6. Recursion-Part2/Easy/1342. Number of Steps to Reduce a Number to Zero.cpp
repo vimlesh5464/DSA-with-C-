@@ -37,4 +37,46 @@
 
 //     0 <= num <= 106
 
- 
+#include<iostream>
+#include<vector>
+using namespace std;
+// Time: O(log n)
+// 👉 Because we divide by 2 most of the time
+// 🧠 Space: O(1)
+class Solution {
+  public:
+      int numberOfSteps(int num) {
+          int steps = 0;
+  
+          while(num > 0) {
+              if(num % 2 == 0) {
+                  num /= 2;
+              } else {
+                  num -= 1;
+              }
+              steps++;
+          }
+  
+          return steps;
+      }
+  };
+
+  class Solution {
+    public:
+        int numberOfSteps(int num) {
+            if(num == 0) return 0;
+    
+            int steps = 0;
+    
+            while(num > 0) {
+                if(num & 1) {  // odd
+                    steps += 2;
+                } else {       // even
+                    steps += 1;
+                }
+                num >>= 1;
+            }
+    
+            return steps - 1; // adjust extra step
+        }
+    };
