@@ -29,71 +29,71 @@
 #include<string>
 #include<vector>
 using namespace std;
-class Solution {
-  public:
-      
-      // Check palindrome using recursion
-      bool isPalindrome(string &s, int left, int right) {
-          if (left >= right) return true;
-          
-          if (s[left] != s[right]) return false;
-          
-          return isPalindrome(s, left + 1, right - 1);
-      }
-      
-      // Generate all substrings using recursion
-      int solve(string &s, int i, int j) {
-          int n = s.length();
-          
-          // If i reaches end
-          if (i == n) return 0;
-          
-          // If j reaches end, move to next i
-          if (j == n) return solve(s, i + 1, i + 1);
-          
-          int count = 0;
-          
-          // Check current substring
-          if (isPalindrome(s, i, j))
-              count = 1;
-          
-          // Move j forward
-          return count + solve(s, i, j + 1);
-      }
-      
-      int countSubstrings(string s) {
-          return solve(s, 0, 0);
-      }
-  };
+
   class Solution {
     public:
-        int countSubstrings(string s) {
-            int n = s.length();
+    
+        int expand(string &s, int left, int right) {
             int count = 0;
     
-            for (int center = 0; center < n; center++) {
-                
-                // Odd length palindrome
-                int left = center, right = center;
-                while (left >= 0 && right < n && s[left] == s[right]) {
-                    count++;
-                    left--;
-                    right++;
-                }
-    
-                // Even length palindrome
-                left = center;
-                right = center + 1;
-                while (left >= 0 && right < n && s[left] == s[right]) {
-                    count++;
-                    left--;
-                    right++;
-                }
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
+                count++;
+                left--;
+                right++;
             }
     
             return count;
         }
+    
+        int countSubstrings(string s) {
+            int n = s.size();
+            int total = 0;
+    
+            for (int i = 0; i < n; i++) {
+    
+                // odd length palindromes (center = i)
+                total += expand(s, i, i);
+    
+                // even length palindromes (center = i, i+1)
+                total += expand(s, i, i + 1);
+            }
+    
+            return total;
+        }
     };
+
+    class Solution {
+      public:
+      
+          bool solve(int i, int j, string &s, vector<vector<int>> &dp) {
+              if (i >= j) return true;
+      
+              if (dp[i][j] != -1) return dp[i][j];
+      
+              if (s[i] == s[j]) {
+                  return dp[i][j] = solve(i + 1, j - 1, s, dp);
+              }
+      
+              return dp[i][j] = false;
+          }
+      
+          int countSubstrings(string s) {
+              int n = s.size();
+      
+              vector<vector<int>> dp(n, vector<int>(n, -1));
+              int count = 0;
+      
+              for (int i = 0; i < n; i++) {
+                  for (int j = i; j < n; j++) {
+                      if (solve(i, j, s, dp)) {
+                          count++;
+                      }
+                  }
+              }
+      
+              return count;
+          }
+      };
 class Solution {
   public:
       int countSubstrings(string s) {

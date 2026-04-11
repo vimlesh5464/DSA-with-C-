@@ -50,6 +50,42 @@ class Solution {
           return count;
       }
   };
+  class Solution {
+    public:
+    
+        int expand(string &s, int left, int right) {
+            int count = 0;
+    
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
+    
+                // only count if substring length >= 2
+                if (right - left + 1 >= 2) {
+                    count++;
+                }
+    
+                left--;
+                right++;
+            }
+    
+            return count;
+        }
+    
+        int countPS(string &s) {
+            int n = s.size();
+            int total = 0;
+    
+            for (int i = 0; i < n; i++) {
+    
+                // odd length palindromes
+                total += expand(s, i, i);
+    
+                // even length palindromes
+                total += expand(s, i, i + 1);
+            }
+    
+            return total;
+        }
+    };
   
 class Solution {
   public:

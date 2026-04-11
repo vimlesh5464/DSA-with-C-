@@ -1,4 +1,5 @@
-// Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*' where:
+// Given an input string (s) and a pattern (p), implement wildcard pattern matching 
+//with support for '?' and '*' where:
 
 //     '?' Matches any single character.
 //     '*' Matches any sequence of characters (including the empty sequence).
@@ -38,50 +39,42 @@
 using namespace std;
 
 class Solution {
-public:
-    int n, m;
-    string s, p;
-    vector<vector<int>> dp;
-
-    bool solve(int i, int j) {
-        // If already computed
-        if (dp[i][j] != -1) return dp[i][j];
-
-        // Both string and pattern finished
-        if (i == n && j == m) return dp[i][j] = true;
-
-        // Pattern finished but string not
-        if (j == m) return dp[i][j] = false;
-
-        // String finished but pattern remains
-        if (i == n) {
-            for (int k = j; k < m; k++) {
-                if (p[k] != '*') return dp[i][j] = false;
-            }
-            return dp[i][j] = true;
-        }
-
-        // Match case or '?'
-        if (p[j] == s[i] || p[j] == '?')
-            return dp[i][j] = solve(i+1, j+1);
-
-        // '*' case → two choices
-        if (p[j] == '*')
-            return dp[i][j] = solve(i, j+1) || solve(i+1, j);
-
-        return dp[i][j] = false;
-    }
-
-    bool isMatch(string s, string p) {
-        this->s = s;
-        this->p = p;
-        n = s.size();
-        m = p.size();
-        dp.assign(n+1, vector<int>(m+1, -1));
-        return solve(0, 0);
-    }
-};
-
+  public:
+    bool solve(int i, int j,string &s, string &p,vector<vector<int>> &dp,int n, int m) {
+          // If already computed
+          if (dp[i][j] != -1) return dp[i][j];
+  
+          // Both string and pattern finished
+          if (i == n && j == m) return dp[i][j] = true;
+  
+          // Pattern finished but string not
+          if (j == m) return dp[i][j] = false;
+  
+          // String finished but pattern remains
+          if (i == n) {
+              for (int k = j; k < m; k++) {
+                  if (p[k] != '*') return dp[i][j] = false;
+              }
+              return dp[i][j] = true;
+          }
+  
+          // Match case or '?'
+          if (p[j] == s[i] || p[j] == '?')
+              return dp[i][j] = solve(i+1, j+1,s,p,dp,n, m);
+  
+          // '*' case → two choices
+          if (p[j] == '*')
+              return dp[i][j] = solve(i, j+1,s,p,dp,n, m) || solve(i+1, j,s,p,dp,n, m);
+  
+          return dp[i][j] = false;
+      }
+      bool isMatch(string s, string p) {
+          int n = s.size();
+          int m = p.size();
+          vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
+          return solve(0, 0,s, p,dp,n, m);
+      }
+  };
 class Solution {
   public:
       bool isMatch(string s, string p) {

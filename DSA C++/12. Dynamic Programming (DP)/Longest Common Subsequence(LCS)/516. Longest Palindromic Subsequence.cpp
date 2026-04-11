@@ -1,6 +1,7 @@
 // Given a string s, find the longest palindromic subsequence's length in s.
 
-// A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+// A subsequence is a sequence that can be derived from another sequence by deleting 
+//some or no elements without changing the order of the remaining elements.
 
  
 
@@ -61,33 +62,39 @@ class Solution {
   };
   class Solution {
     public:
-        int solve(string &s, int i, int j, vector<vector<int>> &dp) {
-            // Base cases
-            if (i > j) return 0;
-            if (i == j) return 1;
     
-            // Already computed
+        int solve(int i, int j, string &s1, string &s2,
+                  vector<vector<int>> &dp) {
+    
+            if (i < 0 || j < 0) return 0;
+    
             if (dp[i][j] != -1) return dp[i][j];
     
-            // Match case
-            if (s[i] == s[j]) {
-                return dp[i][j] = 2 + solve(s, i + 1, j - 1, dp);
+            if (s1[i] == s2[j]) {
+                return dp[i][j] =
+                    1 + solve(i - 1, j - 1, s1, s2, dp);
             }
     
-            // Not match
-            return dp[i][j] = max(
-                solve(s, i + 1, j, dp),
-                solve(s, i, j - 1, dp)
-            );
+            return dp[i][j] =
+                max(solve(i - 1, j, s1, s2, dp),
+                    solve(i, j - 1, s1, s2, dp));
         }
     
-        int longestPalindromeSubseq(string s) {
-            int n = s.length();
-            
-            // DP table initialized with -1
-            vector<vector<int>> dp(n, vector<int>(n, -1));
-            
-            return solve(s, 0, n - 1, dp);
+        int lcs(string s1, string s2) {
+            int n = s1.size();
+            int m = s2.size();
+    
+            vector<vector<int>> dp(n, vector<int>(m, -1));
+    
+            return solve(n - 1, m - 1, s1, s2, dp);
+        }
+    
+        int longestPalinSubseq(string &s) {
+    
+            string t = s;
+            reverse(t.begin(), t.end());  // FIX: reverse t, not s
+    
+            return lcs(s, t);
         }
     };
 class Solution {
